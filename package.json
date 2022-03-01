@@ -1,7 +1,7 @@
 {
-  "name": "pwa-boilerplate",
-  "description": "Finerd",
-  "version": "0.3.0",
+  "name": "finerd",
+  "description": "Finance Application study projecrt",
+  "version": "0.1.0",
   "license": "MIT",
   "dependencies": {
     "@svgr/webpack": "5.5.0",
