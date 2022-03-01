@@ -43,3 +43,7 @@ Many thanks to the people below for supporting this project! 🎉
 
 [![Stargazers repo roster for @Tomburgs/pwa-boilerplate](https://reporoster.com/stars/tchapsdev/finerd)](https://github.com/tchapsdev/finerd/stargazers)
 [![Forkers repo roster for @Tomburgs/pwa-boilerplate](https://reporoster.com/forks/tchapsdev/finerd)](https://github.com/tchapsdev/finerd/network/members)
+
+## Credits
+
+[![Forkers repo from @Tomburgs/pwa-boilerplate](https://github.com/tomburgs/pwa-boilerplate)](https://github.com/tomburgs/pwa-boilerplate)
