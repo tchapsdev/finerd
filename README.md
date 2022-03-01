@@ -30,7 +30,7 @@ The following are features that come with Finerd:
 
 ## Demo
 
-Check out our demo @ [pwa-boilerplate.com](https://pwa-boilerplate.com)!
+Check out our demo @ [pwa-finerd.com](https://pwa-finerd.com)!
 
 ## Get started
 
@@ -41,5 +41,5 @@ Our docs & guidelines can be found [here](docs/)
 
 Many thanks to the people below for supporting this project! 🎉
 
-[![Stargazers repo roster for @Tomburgs/pwa-boilerplate](https://reporoster.com/stars/Tomburgs/pwa-boilerplate)](https://github.com/Tomburgs/pwa-boilerplate/stargazers)
-[![Forkers repo roster for @Tomburgs/pwa-boilerplate](https://reporoster.com/forks/Tomburgs/pwa-boilerplate)](https://github.com/Tomburgs/pwa-boilerplate/network/members)
+[![Stargazers repo roster for @Tomburgs/pwa-boilerplate](https://reporoster.com/stars/tchapsdev/finerd)](https://github.com/tchapsdev/finerd/stargazers)
+[![Forkers repo roster for @Tomburgs/pwa-boilerplate](https://reporoster.com/forks/tchapsdev/finerd)](https://github.com/tchapsdev/finerd/network/members)
