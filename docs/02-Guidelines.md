@@ -1,6 +1,6 @@
 # Guidelines
 
-Here we'll discuss guidelines on how to create components, styling, etc.
+Here we'll discuss guidelines on how to create components, styling, etc for Finerd App.
 
 ## Component & Routes structure
 

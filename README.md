@@ -2,16 +2,16 @@
     <img
       width="512px"
       alt="Finerd"
-      src="https://github.com/Tomburgs/pwa-boilerplate/raw/master/docs/pwa-finerd.png"
+      src="https://github.com/tchapsdev/finerd/raw/master/docs/pwa-finerd.png"
     />
 </div>
 <p align="center">
-    <img alt="Build Status" src="https://github.com/tomburgs/pwa-boilerplate/workflows/Build/badge.svg">
-    <img alt="License" src="https://img.shields.io/github/license/Tomburgs/pwa-boilerplate?label=License">
-    <img alt="Version" src="https://img.shields.io/github/package-json/v/Tomburgs/pwa-boilerplate?label=Version">
-    <img alt="Dependencies" src="https://img.shields.io/david/Tomburgs/pwa-boilerplate?label=Dependencies">
-    <img alt="GitHub Stars" src="https://img.shields.io/github/stars/Tomburgs/pwa-boilerplate?label=Stars">
-    <img alt="GitHub Forks" src="https://img.shields.io/github/forks/Tomburgs/pwa-boilerplate?label=Forks">
+    <img alt="Build Status" src="https://github.com/tchapsdev/finerd/workflows/Build/badge.svg">
+    <img alt="License" src="https://img.shields.io/github/license/tchapsdev/finerd?label=License">
+    <img alt="Version" src="https://img.shields.io/github/package-json/v/tchapsdev/finerd?label=Version">
+    <img alt="Dependencies" src="https://img.shields.io/david/tchapsdev/finerd?label=Dependencies">
+    <img alt="GitHub Stars" src="https://img.shields.io/github/stars/tchapsdev/finerd?label=Stars">
+    <img alt="GitHub Forks" src="https://img.shields.io/github/forks/tchapsdev/finerd?label=Forks">
 </p>
 
 ## What is Finerd?
@@ -46,4 +46,4 @@ Many thanks to the people below for supporting this project! 🎉
 
 ## Credits
 
-[![Forkers repo from @Tomburgs/pwa-boilerplate](https://github.com/tomburgs/pwa-boilerplate)](https://github.com/tomburgs/pwa-boilerplate)
+[![Forkers repo from @tchapsdev/finerd](https://github.com/tchapsdev/finerd)](https://github.com/tchapsdev/finerd)
