@@ -2,7 +2,7 @@
 
 In this section we'll go over
 - How to clone repository
-- Yarn commands
+- Npm commands
 - Directory structure
 
 ## Clone repository
@@ -12,14 +12,14 @@ You can clone this repository by running the following command:
 git clone https://github.com/tchapsdev/finerd
 ```
 
-After this, run the `yarn install` command to install node modules.
+After this, run the `npm install` command to install node modules.
 
-## Yarn commands
+## Npm commands
 
-- `yarn development` - Start NextJS development server, you might need to run build before first run.
-- `yarn build` - Create build files.
-- `yarn start` - Start NextJS production server.
-- `yarn eslint` - Run ESLint tests.
+- `npm run dev` - Start NextJS development server, you might need to run build before first run.
+- `npm run build` - Create build files.
+- `npm run start` - Start NextJS production server.
+- `npm run eslint` - Run ESLint tests.
 
 ## Project structure
 

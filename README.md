@@ -2,7 +2,7 @@
     <img
       width="512px"
       alt="Finerd"
-      src="https://github.com/Tomburgs/pwa-boilerplate/raw/master/docs/pwa-boilerplate.png"
+      src="https://github.com/Tomburgs/pwa-boilerplate/raw/master/docs/pwa-finerd.png"
     />
 </div>
 <p align="center">
@@ -16,8 +16,8 @@
 
 ## What is Finerd?
 
-Finerd is React & NextJS based boilerplate written in TypeScript.
-It's designed to help you kick-start your next project by supplying you with features & components to cut development time.
+Finerd is React & NextJS based finance application written in TypeScript.
+It's designed to help user manage their expenses, saving and investments.
 
 ## What features does Finerd bring?
 
@@ -41,8 +41,8 @@ Our docs & guidelines can be found [here](docs/)
 
 Many thanks to the people below for supporting this project! 🎉
 
-[![Stargazers repo roster for @Tomburgs/pwa-boilerplate](https://reporoster.com/stars/tchapsdev/finerd)](https://github.com/tchapsdev/finerd/stargazers)
-[![Forkers repo roster for @Tomburgs/pwa-boilerplate](https://reporoster.com/forks/tchapsdev/finerd)](https://github.com/tchapsdev/finerd/network/members)
+[![Stargazers repo roster for @tchapsdev/finerd](https://reporoster.com/stars/tchapsdev/finerd)](https://github.com/tchapsdev/finerd/stargazers)
+[![Forkers repo roster for @tchapsdev/finerd](https://reporoster.com/forks/tchapsdev/finerd)](https://github.com/tchapsdev/finerd/network/members)
 
 ## Credits
 
