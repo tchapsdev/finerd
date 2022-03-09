@@ -17,7 +17,7 @@ export default function Landing(): JSX.Element {
         <div className={ landingText }>
           <h1>Finerd</h1>
           <p>
-            Designed to help you kick-start your next project.<br />
+            Designed to help you kick-start your next PWA project.<br />
             This boilerplate is production ready and comes with 
             a service worker, redux store, dark-mode, router, and plenty other useful features.
           </p>
