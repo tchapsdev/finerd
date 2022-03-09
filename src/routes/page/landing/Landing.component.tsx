@@ -19,7 +19,7 @@ export default function Landing(): JSX.Element {
           <p>
             Designed to help you kick-start your next PWA project.<br />
             This boilerplate is production ready and comes with 
-            a service worker, redux store, dark-mode, router, and plenty other useful features.
+            a service worker, redux store, dark-mode, router, and plenty other useful features!
           </p>
         </div>
         <div className={ landingNavigationWrapper }>
