@@ -3,6 +3,7 @@ const generateSitemap = require('./scripts/sitemap');
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+// commentaire
 
 const baseUrl = 'https://pwa-boilerplate.com';
 
