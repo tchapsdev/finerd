@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'vars';
+@import 'mixins';
+@import 'animations';
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: $base-font-family;
+    box-sizing: border-box;
+    @include text-body();
+    // Hide scrollbars
+    ::-webkit-scrollbar {
+        display: none;
+    }
+    -ms-overflow-style: none;
+}
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+a {
+    @include text-link();
+}
+
+* {
+    box-sizing: border-box;
+}

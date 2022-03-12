@@ -1,0 +1,12 @@
+{
+    "include": [
+        "pages/*.ts",
+        "pages/**/*.ts"
+    ],
+    "exclude": [],
+    "extension": [
+        ".ts"
+    ],
+    "all": true,
+    "report-dir": "output/coverage/all"
+}
