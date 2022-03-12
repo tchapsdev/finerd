@@ -20,7 +20,7 @@ declare type Action = {
 declare type ContextStore = {
     currentTransaction?: Transaction;
     currentUser?: User;
-    currentPanel?: Transaction['type'];
+    currentPanel?: number;
     isLoading?: boolean;
     isStatsExpanded?: boolean;
     readonly supportedTransactions: Transaction['type'][];
@@ -29,7 +29,7 @@ declare type ContextStore = {
 export const Context = createContext<any>({});
 
 export const initialState: ContextStore = {
-    currentPanel: 'expense',
+    currentPanel: 0,
     isLoading: false,
     isStatsExpanded: false,
     supportedTransactions: ['expense', 'saving', 'income'],
@@ -38,11 +38,11 @@ export const initialState: ContextStore = {
 export const contextReducer = (state: ContextStore, action: Action) => {
     switch (action.type) {
         case actions.SET_CURRENT_TRANSACTION:
-            return { ...state, currentTransaction: setCurrentTransaction(action.data).data };
+            return { ...state, currentTransaction: action.data };
         case actions.SET_CURRENT_USER:
-            return { ...state, currentUser: setCurrentUser(action.data).data };
+            return { ...state, currentUser: action.data };
         case actions.SET_CURRENT_PANEL:
-            return { ...state, currentPanel: setCurrentPanel(action.data).data };
+            return { ...state, currentPanel: action.data };
         case actions.SET_IS_LOADING:
             return { ...state, isLoading: action.data };
         case actions.SET_STATS_EXPANDED:
@@ -59,11 +59,6 @@ export const setCurrentTransaction = (data: Transaction) => ({
 
 export const setCurrentUser = (data: User) => ({
     type: actions.SET_CURRENT_USER,
-    data,
-});
-
-export const setCurrentPanel = (data: Transaction['type']) => ({
-    type: actions.SET_CURRENT_PANEL,
     data,
 });
 
