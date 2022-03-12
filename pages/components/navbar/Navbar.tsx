@@ -25,13 +25,13 @@ export const Navbar = () => {
     return (
         <div>
             <div>
-                <Tabs className="tabs tabs-boxed" value={value} onChange={handleChange} centered>
+                <Tabs className="tabs tabs-boxed bg-white" value={value} onChange={handleChange} centered>
                     <Tab className="tab" label="Expenses" {...indexToProps(0)} />
                     <Tab className="tab" label="Savings" {...indexToProps(1)} />
                     <Tab className="tab" label="Income" {...indexToProps(2)} />
                 </Tabs>
             </div>
-            <Panel value={value} index={0}>
+            {/* <Panel value={value} index={0}>
                 Item One
             </Panel>
             <Panel value={value} index={1}>
@@ -39,7 +39,7 @@ export const Navbar = () => {
             </Panel>
             <Panel value={value} index={2}>
                 Item Three
-            </Panel>
+            </Panel> */}
         </div>
     );
 };
