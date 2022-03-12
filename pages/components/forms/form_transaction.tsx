@@ -6,53 +6,29 @@ const FormTransaction = () => {
 
   return (
     <form>
-      <input
-        type='text'
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder='Full name'
-        aria-label='fullname'
-      ></input>
-      <input
-        type='text'
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder='Full name'
-        aria-label='fullname'
-      ></input>
-      <label>
-        <input
-          type='checkbox'
-          checked={checked}
-          onChange={(e) => setChecked(e.target.checked)}
-        ></input>{' '}
-        Not a robot?
-      </label>
-      <input type='submit' value='Submit' ></input>
-    </form>
+      <div className='form-group'>
+      <label>Id</label>
+        <input type="number" className='form-control' value={name} onChange={(e) => setName(e.target.value)} placeholder="Id" ></input>
+      </div>  
+      <div className='form-group'>
+      <label>transaction type id</label>
+        <input type="number" className='form-control' id="" placeholder="transaction type id" ></input>
+      </div>
+      <div className='form-group'>
+        <label>category id</label>
+        <input type="number" className='form-control' id="category_id" placeholder="category id" ></input>
+      </div>
+      <div className='form-group'>
+        <label>descritpion</label>
+        <input type="text" className='form-control' id="descritpion" placeholder="descritpion" ></input>
+      </div>   
+      <div className='form-group'>
+        <label>montant</label>
+        <input type="number" className='form-control' id="montant" placeholder="1,0000" ></input>
+      </div>
+      <input type='submit' value='Submit' className='btn btn-primary'></input>
+    </form>       
   );
 };
 
 export default FormTransaction;
-
-// import React, { Component } from 'react'
-
-// export default class form_transaction extends Component {
-//   render() {
-//     return (
-//       <div>form_transaction</div>
-//     )
-//   }
-// }
-
-// import React, { Component } from 'react'
-
-// export class form_transaction extends Component {
-//   render() {
-//     return (
-//       <div>form_transaction</div>
-//     )
-//   }
-// }
-
-// export default form_transaction

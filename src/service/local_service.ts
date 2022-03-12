@@ -23,7 +23,8 @@ export class LocalService {
     protected delete_Item_by_id(key: string, id: number) {
         let storageData = this.localStoreGet(key);
         if (storageData == null || storageData == undefined) {
-            return null;
+            console.log(`Can not delete. The item with id = ${id} does not exit !`)
+            return;
         }
         storageData = storageData.filter(item => {
             return item.id != id;
