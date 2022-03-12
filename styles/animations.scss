@@ -1,0 +1,58 @@
+$animation-duration: 240ms;
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-exit-active {
+  transition: opacity $animation-duration;
+}
+
+.slide-enter {
+  transform: translateX(100%);
+}
+
+.slide-enter-active {
+  transform: translateX(0%);
+  transition: transform $animation-duration ease-in-out;
+}
+
+.slide-exit {
+  transform: translateX(0%);
+}
+
+.slide-exit-active {
+  transform: translateX(-100%);
+  transition: transform $animation-duration ease-in-out;
+}
+
+.slide-reverse-enter {
+  transform: translateX(-100%);
+}
+
+.slide-reverse-enter-active {
+  transform: translateX(0%);
+  transition: transform $animation-duration ease-in-out;
+}
+
+.slide-reverse-exit {
+  transform: translateX(0%);
+}
+
+.slide-reverse-exit-active {
+  transform: translateX(100%);
+  transition: transform $animation-duration ease-in-out;
+}

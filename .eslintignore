@@ -1,0 +1,12 @@
+.eslintrc.js
+next.config.js
+next-env.d.ts
+postcss.config.js
+tailwind.config.js
+/tests
+/config
+/dist
+/out
+/build
+/coverage
+/node_modules
