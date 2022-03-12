@@ -1,4 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ide
+.editorconfig
+.idea/
+.vscode/
+.history/
 
 # dependencies
 /node_modules
@@ -7,6 +12,8 @@
 
 # testing
 /coverage
+tests/coverage/*
+.nyc_output/
 
 # next.js
 /.next/
