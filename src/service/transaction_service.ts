@@ -1,10 +1,9 @@
-import { Transaction } from "../model/transaction"
-import { LocalService } from "./local_service";
+import { Transaction } from '../model/transaction';
+import { LocalService } from './local_service';
 
 export class TransactionService extends LocalService {
-
-    transaction_key :string= "transactions";
-    category_key : string = "categories";
+    transaction_key = 'transactions';
+    category_key = 'categories';
 
     public save(model: Transaction) {
         this.save_Item(this.transaction_key, model);
@@ -21,5 +20,4 @@ export class TransactionService extends LocalService {
     public delete(id: number) {
         this.delete_Item_by_id(this.transaction_key, id);
     }
-
 }

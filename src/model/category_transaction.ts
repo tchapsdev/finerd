@@ -1,10 +1,7 @@
-
-class CategoryTransaction  {
-    id : number
-    transaction_id : number
-    name : string
+class CategoryTransaction {
+    id: number;
+    transaction_id: number;
+    name: string;
 }
 
-export  {
-     CategoryTransaction
-}
+export { CategoryTransaction };

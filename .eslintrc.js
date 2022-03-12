@@ -45,7 +45,7 @@ module.exports = {
         'jquery-deferred-must-complete': 0,
         'label-position': 0,
         'mocha-avoid-only': 0,
-        '@typescript-eslint/no-explicit-any': 1,
+        '@typescript-eslint/no-explicit-any': 0,
         'no-arg': 0,
         'no-bitwise': 0,
         'no-conditional-assignment': 0,

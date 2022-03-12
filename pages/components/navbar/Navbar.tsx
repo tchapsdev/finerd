@@ -1,4 +1,5 @@
-import React , {}from 'react';
+import { SyntheticEvent } from 'react';
+import { capitalize } from 'lodash';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 
@@ -15,20 +16,25 @@ const indexToProps = (index: number) => ({
 //     }
 // ]
 
-export const Navbar = () => {
-    const [value, setValue] = React.useState(0);
+export const Navbar = ({ tabs, current }) => {
+    let value = tabs.indexOf(current);
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+    const handleChange = (event: SyntheticEvent, newValue: number) => {
+        value = newValue;
     };
 
     return (
         <div>
             <div>
                 <Tabs className="tabs tabs-boxed" value={value} onChange={handleChange} centered>
-                    <Tab className="tab" label="Expenses" {...indexToProps(0)} />
-                    <Tab className="tab" label="Savings" {...indexToProps(1)} />
-                    <Tab className="tab" label="Income" {...indexToProps(2)} />
+                    {/*<Tab className="tab" label="Expenses" {...indexToProps(0)} />*/}
+                    {/*<Tab className="tab" label="Savings" {...indexToProps(1)} />*/}
+                    {/*<Tab className="tab" label="Income" {...indexToProps(2)} />*/}
+                    {
+                        tabs.map((tab, index) => (
+                            <Tab className="tab" label={capitalize(tab)} {...indexToProps(index)} />
+                        ))
+                    }
                 </Tabs>
             </div>
             <Panel value={value} index={0}>
