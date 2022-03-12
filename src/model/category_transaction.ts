@@ -1,6 +1,13 @@
+import {Serialize, SerializeProperty, Serializable} from 'ts-serializer';
 
-export class CategoryTransaction {
-    category_id : number
+
+@Serialize({})
+class CategoryTransaction extends Serializable {
+    id : number
     transaction_id : number
     name : string
+}
+
+export  {
+     CategoryTransaction
 }
