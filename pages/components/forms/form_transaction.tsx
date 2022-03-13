@@ -3,9 +3,7 @@ import $ from 'jquery';
 import { Transaction } from '../../../src/model/transaction';
 import TransactionService from '../../../src/service/transaction_service';
 
-const FormTransaction = () => {
-  const [name, setName] = useState('');
-  const [checked, setChecked] = useState(false);
+const FormTransaction = () => { 
   const initialFormData = new Transaction();  
   initialFormData.id = 0
   initialFormData.transaction_type_id = 1
@@ -28,18 +26,16 @@ const FormTransaction = () => {
 
   const handleSubmit = (e) =>{
     e.preventDefault()
-
     const service = new TransactionService();
     service.save(formData)
     console.log(service.getAll()) 
   }
 
-
   return (
-    <form>      
+    <form>
        <div className='form-group'>
         <label>id</label>
-        <input type="number" className='form-control' name='id' onChange={handleChange} readOnly ></input>
+        <input type="number" className='form-control' name='id' onChange={handleChange} ></input>
       </div>
       <div className='form-group'>
         <label>Transaction type id</label>
