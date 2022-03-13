@@ -1,10 +1,13 @@
-import { Props } from 'react-apexcharts';
-import { Card } from '@mui/material';
 import dynamic from 'next/dynamic';
+import { Paper } from '@mui/material';
+import { Props } from 'react-apexcharts';
+import { useEffect, useState } from 'react';
+
+import { Transaction, TransactionType } from '../../../../../types/@finerd';
+import { TransactionService } from '../../../../service/TransactionService';
 
 export const config: Props = {
     type: 'area',
-    height: 150,
     options: {
         chart: {
             id: 'transactions-chart',
@@ -28,7 +31,7 @@ export const config: Props = {
             },
             y: {
                 title: {
-                    formatter: (seriesName: string) => `Transactions ${seriesName} `
+                    formatter: (name: string) => name
                 }
             },
             marker: {
@@ -36,23 +39,39 @@ export const config: Props = {
             }
         }
     },
-    series: [
-        {
-            data: [0, 15, 10, 50, 30, 40, 25]
-        },
-        {
-            data: [2, 13, 4, 35, 13, 45, 35]
-        }
-    ]
+    series: []
 };
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-export const Chart = () => {
-    // todo: add chart data from props
+const map: Record<TransactionType, TransactionType> = {
+    expense: 'income',
+    saving: 'expense',
+    income: 'saving'
+};
+
+export const Chart = ({ transactions, type }: { transactions: Transaction[], type: TransactionType }) => {
+    const [targetTransactions, setTargetTransactions] = useState([]);
+
+    useEffect(() => {
+        const transactionService = new TransactionService();
+        setTargetTransactions(transactionService.findAllByType(map[type]));
+    }, [type, map]);
+
+    config.series = [
+        {
+            name: type,
+            data: transactions.map(transaction => transaction.amount)
+        },
+        {
+            name: map[type],
+            data: targetTransactions.map(transaction => transaction.amount)
+        }
+    ];
+
     return (
-        <Card>
+        <Paper elevation={0}>
             <ReactApexChart {...config} />
-        </Card>
+        </Paper>
     );
 };

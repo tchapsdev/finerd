@@ -1,5 +1,5 @@
+import { Grid, Tab, Tabs, Typography } from '@mui/material';
 import { SyntheticEvent, useContext, useEffect, useState } from 'react';
-import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 
 import { actions, Context } from '../../context/Context';
 import { TransactionService } from '../../../service/TransactionService';
@@ -28,24 +28,22 @@ export const Navbar = () => {
     }, [current, tabs]);
 
     return (
-        <Box>
-            <Grid container alignItems="center" justifyContent="space-between" sx={{ rowGap: 5 }}>
-                {/* todo: logo and login menu*/}
-                <Grid item xs={12}>
-                    <Tabs className="tabs tabs-boxed" value={current} onChange={handleChange} centered>
-                        {
-                            tabs.map((tab, index) => (
-                                <Tab className="tab" label={tab} {...indexToProps(index)} />
-                            ))
-                        }
-                    </Tabs>
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography variant="h2" align="center" gutterBottom={true} sx={{ fontWeight: 'bold' }}>
-                        {new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(balance)}
-                    </Typography>
-                </Grid>
+        <Grid container alignItems="center" justifyContent="space-between" sx={{ rowGap: 3 }}>
+            {/* todo: logo and login menu*/}
+            <Grid item xs={12}>
+                <Tabs className="tabs tabs-boxed" value={current} onChange={handleChange} centered>
+                    {
+                        tabs.map((tab, index) => (
+                            <Tab className="tab" label={tab} {...indexToProps(index)} />
+                        ))
+                    }
+                </Tabs>
             </Grid>
-        </Box>
+            <Grid item xs={12}>
+                <Typography variant="h2" align="center" sx={{ fontWeight: 'bold' }}>
+                    {new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(balance)}
+                </Typography>
+            </Grid>
+        </Grid>
     );
 };

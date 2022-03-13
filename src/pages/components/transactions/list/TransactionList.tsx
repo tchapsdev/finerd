@@ -5,7 +5,9 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 
-export const TransactionList = ({ transactions }) => (
+import { Transaction } from '../../../../../types/@finerd';
+
+export const TransactionList = ({ transactions }: { transactions: Transaction[] }) => (
     <List>
         {
             transactions?.map((transaction) => (
@@ -24,7 +26,7 @@ export const TransactionList = ({ transactions }) => (
                             style: 'currency',
                             currency: 'CAD'
                         }).format(transaction.amount)}
-                        secondary={transaction.createdAt}
+                        secondary={new Intl.DateTimeFormat('en-CA').format(transaction.createdAt)}
                     />
                 </ListItem>
             ))
