@@ -1,17 +1,15 @@
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
+import { Avatar, List, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 
 import { Transaction } from '../../../../../types/@finerd';
 
+// todo: transform to a container with cards
+// todo: adjust layout
 export const TransactionList = ({ transactions }: { transactions: Transaction[] }) => (
-    <List>
+    <List sx={{ width: '100%' }}>
         {
             transactions?.map((transaction) => (
-                <ListItem key={transaction.id}>
+                <ListItem alignItems="flex-start" sx={{ justifyContent: 'space-between' }} key={transaction.id}>
                     <ListItemAvatar>
                         <Avatar>
                             <ImageIcon/>
