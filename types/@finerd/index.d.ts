@@ -44,7 +44,7 @@ export type TransactionType = typeof supportedTransactionTypes[number];
 export type PaymentMethod = typeof supportedPaymentMethods[number];
 
 declare type Transaction = {
-    id: string;
+    id: number;
     amount: number;
     category: Category;
     description?: string;

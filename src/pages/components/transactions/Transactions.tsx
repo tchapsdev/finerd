@@ -1,23 +1,21 @@
-import useSWR from 'swr';
-import { useContext } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Chart } from './chart/Chart';
 import { TransactionList } from './list/TransactionList';
 
-import { Context } from '../../context/Context';
+import { TransactionService } from '../../../service/TransactionService';
 
 export const Transactions = ({ type }) => {
-    const {
-        state: { transactionService },
-        // dispatch,
-    } = useContext(Context);
+    const [transactions, setTransactions] = useState([]);
 
-    const { data } = useSWR('transactions', transactionService.getAll);
-    const transactions = data?.filter((transaction) => transaction.type === type);
+    useEffect(() => {
+        const transactionService = new TransactionService();
+        setTransactions(transactionService.findAllByType(type));
+    }, [type]);
 
     return (
         <>
-            <Chart />
+            <Chart/>
             <TransactionList transactions={transactions}/>
         </>
     );

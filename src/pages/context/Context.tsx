@@ -1,6 +1,5 @@
 import { createContext } from 'react';
 import { Transaction, User } from '../../../types/@finerd';
-import { TransactionService } from '../../service/transaction_service';
 
 export const actions = {
     SET_CURRENT_TRANSACTION: 'set-current-transaction',
@@ -25,7 +24,6 @@ declare type ContextStore = {
     isLoading?: boolean;
     isStatsExpanded?: boolean;
     readonly supportedTransactions: Transaction['type'][];
-    readonly transactionService: TransactionService;
 };
 
 export const Context = createContext<any>({});
@@ -35,7 +33,6 @@ export const initialState: ContextStore = {
     isLoading: false,
     isStatsExpanded: false,
     supportedTransactions: ['expense', 'saving', 'income'],
-    transactionService: new TransactionService(),
 };
 
 export const contextReducer = (state: ContextStore, action: Action) => {

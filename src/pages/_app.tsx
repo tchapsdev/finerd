@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 
-import '../styles/globals.scss';
+import '../../styles/globals.scss';
 
 export const App = ({ Component, pageProps }: AppProps) => (
     <>

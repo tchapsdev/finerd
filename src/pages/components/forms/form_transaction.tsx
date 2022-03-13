@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import $ from 'jquery';
 import { Transaction } from '../../../src/model/transaction';
 import TransactionService from '../../../src/service/transaction_service';
 
@@ -16,7 +15,7 @@ const FormTransaction = () => {
   const [formData, updateFormData] = useState(initialFormData);
 
   const handleChange = (e) => {
-    let inputType = $(`input[name=${e.target.name}`).attr('type');   
+    let inputType = '';// $(`input[name=${e.target.name}`).attr('type');
     updateFormData({
       ...formData,  
       // Trimming any whitespace
