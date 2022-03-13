@@ -14,7 +14,35 @@ export class TransactionService extends LocalService {
     }
 
     public getAll() {
-        return this.get_Items(this.transaction_key);
+        return [
+            {
+                "id": "1",
+                "type": "expense",
+                "category": "other",
+                "description": "achat telephone",
+                "amount": 1200,
+                "photo": "photo 1",
+                "paymentMethod": "cash"
+            },
+            {
+                "id": "2",
+                "type": "saving",
+                "category": "other",
+                "description": "achat Carburant",
+                "amount": 60,
+                "photo": "photo 1",
+                "paymentMethod": "cash"
+            },
+            {
+                "id": "3",
+                "type": "expense",
+                "category": "other",
+                "description": "new fruit",
+                "amount": 360,
+                "photo": "photo 1",
+                "paymentMethod": "cash"
+            }
+        ];
     }
 
     public delete(id: number) {
