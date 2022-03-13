@@ -1,13 +1,27 @@
 export class LocalService {
     protected save_Item(key: string, model: any) {
         let storageData = this.get_Items(key);
-        // remove if already exist
-        storageData = storageData.filter(item => {
-            return item.id != model.id;
-        });
+        if(model.id < 1){
+            model.id = this.getNextId(key);
+        }
+        else {
+            // remove if already exist
+            storageData = storageData.filter(item => {
+                return item.id != model.id;
+            });
+        }
         // Add new item
         storageData.push(model);
         this.localStoreSet(key, storageData);
+    }
+
+    private getNextId(key: string) { 
+        let storageData = this.get_Items(key);
+        if (storageData == null || storageData == undefined) {
+            return 1;
+        }
+        storageData = storageData.sort((a, b) => b.id - a.id);
+         return storageData[0].id + 1;
     }
 
     protected get_Item_by_id(key: string, id: number) {
