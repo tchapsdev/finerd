@@ -1,7 +1,7 @@
-import { LocalService } from './LocalService';
+import { LocalStorageService } from './LocalStorageService';
 import { Transaction } from '../../types/@finerd';
 
-export class TransactionService extends LocalService<Transaction> {
+export class TransactionService extends LocalStorageService<Transaction> {
     protected key = 'transactions';
 
     public readonly save = (model: Transaction): Transaction => this.createOrUpdate(model);

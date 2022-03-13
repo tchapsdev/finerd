@@ -1,6 +1,6 @@
 import { find, isEmpty, remove } from 'lodash';
 
-export abstract class LocalService<T extends { id: number; createdAt?: Date; updatedAt?: Date }> {
+export abstract class LocalStorageService<T extends { id: number; createdAt?: Date; updatedAt?: Date }> {
     protected abstract key: string;
 
     protected readonly createOrUpdate = (model: T): T => {
