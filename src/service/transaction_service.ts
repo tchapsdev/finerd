@@ -1,7 +1,7 @@
 import { Transaction } from '../model/transaction';
 import { LocalService } from './local_service';
 
-export class TransactionService extends LocalService {
+class TransactionService extends LocalService {
     transaction_key = 'transactions';
     category_key = 'categories';
 
@@ -48,4 +48,7 @@ export class TransactionService extends LocalService {
     public delete(id: number) {
         this.delete_Item_by_id(this.transaction_key, id);
     }
+
 }
+
+export default TransactionService
