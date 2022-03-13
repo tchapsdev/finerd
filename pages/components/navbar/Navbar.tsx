@@ -26,9 +26,9 @@ export const Navbar = () => {
         <div>
             <div>
                 <Tabs className="tabs tabs-boxed bg-white" value={value} onChange={handleChange} centered>
-                    <Tab className="tab" label="Expenses" {...indexToProps(0)} />
-                    <Tab className="tab" label="Savings" {...indexToProps(1)} />
-                    <Tab className="tab" label="Income" {...indexToProps(2)} />
+                    <Tab className="tab text-black" label="Expenses" {...indexToProps(0)} />
+                    <Tab className="tab text-black" label="Savings" {...indexToProps(1)} />
+                    <Tab className="tab text-black" label="Income" {...indexToProps(2)} />
                 </Tabs>
             </div>
             {/* <Panel value={value} index={0}>

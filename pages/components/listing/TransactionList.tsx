@@ -7,12 +7,30 @@ import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
+import Divider from '@mui/material/Divider';
 
 export const TransactionList = () => FolderList() ; 
 
 export function FolderList() {
   return (
-    <List sx={{ width: '100%', bgcolor: 'background.paper'}}>
+
+    // <Box
+    //   sx={{
+    //     width: "100%",
+    //     height: 300,
+    //     backgroundColor: "primary.dark"
+    //   }}
+    // >
+    //   <Box
+    //     sx={{
+    //       width: "50%",
+    //       height: "50%",
+    //       backgroundColor: "red"
+    //     }}
+    //   ></Box>
+    // </Box>
+    
+    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}>
       {/* item 1  */}
       <ListItem>
         <ListItemAvatar>
@@ -25,7 +43,6 @@ export function FolderList() {
         <ListItemText primary="-250.78 $" secondary="Jan 9, 2014">  </ListItemText>
         </div>
       </ListItem>
-
       {/* item 2  */}
       <ListItem>
         <ListItemAvatar>

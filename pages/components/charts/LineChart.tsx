@@ -24,16 +24,16 @@ ChartJS.register(
 
 const labels = ['January', 'February', 'March', 'April', 'May', 'June'];
 const data1 = ['0', '20', '15', '35', '30', '45'];
-const money = 57594864 ; 
+// const money = 57594864 ; 
 
 export const LineChart = () => {
     return (
       //Use of Daisy UI with class Name
-      <div >
+      <div>
             <div className="stat w-full place-items-center  ">
             <div className="stat-title text-black">Total</div>
             <div className="stat-value text-black">$89,500</div>
-          </div>
+      </div>
       
         <div className=" bg-orange-600 pt-5 " > 
           <Line options={options} data={data} />
