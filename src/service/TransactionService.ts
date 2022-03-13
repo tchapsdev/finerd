@@ -8,4 +8,7 @@ export class TransactionService extends LocalStorageService<Transaction> {
 
     public readonly findAllByType = (type: Transaction['type']): Transaction[] =>
         this.findAll().filter(transaction => transaction.type === type);
+
+    public readonly getBalanceByType = (type: Transaction['type']): number =>
+        this.findAllByType(type).reduce((acc, transaction) => acc + transaction.amount, 0);
 }

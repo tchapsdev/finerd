@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import Container from '@mui/material/Container';
+import { Box, Container, Grid } from '@mui/material';
 
 import { Navbar } from './components/navbar/Navbar';
 import { Panel } from './components/panels/Panel';
@@ -14,10 +14,18 @@ export const Main = () => {
     return (
         <ContextProvider value={{ state, dispatch }}>
             <Container maxWidth="sm">
-                <Navbar/>
-                <Panel value={currentPanel} index={currentPanel}>
-                    <Transactions type={supportedTransactions[currentPanel]}/>
-                </Panel>
+                <Box sx={{ flexGrow: 1 }}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <Navbar/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Panel value={currentPanel} index={currentPanel}>
+                                <Transactions type={supportedTransactions[currentPanel]}/>
+                            </Panel>
+                        </Grid>
+                    </Grid>
+                </Box>
             </Container>
         </ContextProvider>
     );
