@@ -1,9 +1,10 @@
 import useSWR from 'swr';
 import { useContext } from 'react';
 
-import { Context } from '../../context/Context';
-import { Cards } from './cards/Cards';
 import { Chart } from './chart/Chart';
+import { TransactionList } from './list/TransactionList';
+
+import { Context } from '../../context/Context';
 
 export const Transactions = ({ type }) => {
     const {
@@ -17,7 +18,7 @@ export const Transactions = ({ type }) => {
     return (
         <>
             <Chart />
-            <Cards transactions={transactions}/>
+            <TransactionList transactions={transactions}/>
         </>
     );
 };

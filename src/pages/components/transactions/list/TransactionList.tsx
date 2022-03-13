@@ -5,7 +5,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 
-export const Cards = ({ transactions }) => (
+export const TransactionList = ({ transactions }) => (
     <List>
         {
             transactions?.map((transaction) => (
