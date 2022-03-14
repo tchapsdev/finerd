@@ -3,8 +3,7 @@ import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } f
 
 import { Transaction } from '../../../../../types/@finerd';
 
-// todo: transform to a container with cards
-// todo: adjust layout
+// todo: add onClick handler to open edit transaction dialog
 export const TransactionList = ({ transactions }: { transactions: Transaction[] }) => (
     <Grid container alignItems="center" justifyContent="space-between" sx={{ rowGap: 2, px: 1 }}>
         {
