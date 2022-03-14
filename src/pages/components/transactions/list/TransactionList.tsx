@@ -1,4 +1,4 @@
-import { capitalize, lowerCase } from 'lodash';
+import { lowerCase, upperCase } from 'lodash';
 import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 
 import { Transaction } from '../../../../../types/@finerd';
@@ -11,7 +11,7 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
             transactions?.map((transaction) => (
                 <Grid item xs={12} md={6} key={`${transaction.type}-transaction-${transaction.id}`}>
                     <CardActionArea>
-                        <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'row' }}>
+                        <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'row', width: 'inherit' }}>
                             <CardMedia
                                 component="img"
                                 sx={{ width: '20%', height: '20%', mt: 1.3, ml: 1 }}
@@ -21,16 +21,16 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
                             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                 <CardContent sx={{ flex: '1 0 auto' }}>
                                     <Typography component="div" variant="h5">
-                                        {capitalize(transaction.category)}
+                                        {upperCase(transaction.category)}
                                     </Typography>
                                     <Typography variant="subtitle1" color="text.secondary" component="div">
                                         {lowerCase(transaction.description)}
                                     </Typography>
                                 </CardContent>
                             </Box>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', mr: 0 }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', width: 'inherit' }}>
                                 <CardContent sx={{ textAlign: 'right' }}>
-                                    <Typography component="div" variant="h5" >
+                                    <Typography component="div" variant="h5">
                                         {new Intl.NumberFormat('en-CA', {
                                             style: 'currency',
                                             currency: 'CAD'
