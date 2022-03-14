@@ -5,7 +5,7 @@ import { Transaction } from '../../../../../types/@finerd';
 
 // todo: add onClick handler to open edit transaction dialog
 export const TransactionList = ({ transactions }: { transactions: Transaction[] }) => (
-    <Grid container alignItems="center" justifyContent="space-between" sx={{ rowGap: 2, px: 1 }}>
+    <Grid container alignItems="center" justifyContent="space-between" sx={{ rowGap: 2, px: 1, pb: 13 }}>
         {
             transactions?.map((transaction) => (
                 <Grid item xs={12} md={6} key={`${transaction.type}-transaction-${transaction.id}`}>
@@ -27,6 +27,7 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
                                     </Typography>
                                 </CardContent>
                             </Box>
+                            <Box sx={{ flexGrow: 1 }}/>
                             <Box sx={{ display: 'flex', flexDirection: 'column', width: 'inherit' }}>
                                 <CardContent sx={{ textAlign: 'right' }}>
                                     <Typography component="div" variant="h5">
