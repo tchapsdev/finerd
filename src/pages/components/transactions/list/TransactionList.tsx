@@ -14,7 +14,7 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
                         <Card variant="outlined" sx={{ display: 'flex', flexDirection: 'row', width: 'inherit' }}>
                             <CardMedia
                                 component="img"
-                                sx={{ width: '20%', height: '20%', mt: 1.3, ml: 1 }}
+                                sx={{ width: '20%', height: '20%', mt: 1.3, ml: 1, mb: 1 }}
                                 image={`/images/${transaction.category}.svg`}
                                 alt={transaction.category}
                             />
