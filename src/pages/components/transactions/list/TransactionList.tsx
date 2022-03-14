@@ -1,4 +1,4 @@
-import { lowerCase, upperCase } from 'lodash';
+import { lowerCase, truncate, upperCase } from 'lodash';
 import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 
 import { Transaction } from '../../../../../types/@finerd';
@@ -24,7 +24,7 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
                                         {upperCase(transaction.category)}
                                     </Typography>
                                     <Typography variant="subtitle1" color="text.secondary" component="div">
-                                        {lowerCase(transaction.description)}
+                                        {lowerCase(truncate(transaction.description, { length: 8 }))}
                                     </Typography>
                                 </CardContent>
                             </Box>
