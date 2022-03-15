@@ -20,6 +20,7 @@ import { ChangeEvent, FormEvent, useRef } from 'react';
 import variables from '../../../../styles/variables.module.scss';
 import { supportedExpenses } from '../../../constants';
 import { WheelPicker } from '../picker/WheelPicker';
+import AlertDialog from '../../popup/popupDelete'
 
 const CameraButton = styled(Button)(`
     border: 1px solid rgba(0, 0, 0, 0.23);
@@ -185,7 +186,7 @@ export const TransactionForm = () => {
 					>
 						<Toolbar sx={{ justifyContent: 'center' }}>
 							<Actions size="large" fullWidth>
-								<Button className="danger">DELETE</Button>
+								<Button className="danger" onClick={AlertDialog}>DELETE</Button>
 								<Button className="success" type="submit">
 									SAVE
 								</Button>
