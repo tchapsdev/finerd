@@ -17,7 +17,7 @@ let transaction = {
 	Payementmethod: 'Card',
 };
 
-export const TransactionInfo = () => (
+export const TransactionForm = () => (
 	<Box sx={{ width: '100%' }}>
 		<Stack spacing={2}>
 			<Card sx={{ display: 'flex', justifyContent: 'space-around' }}>

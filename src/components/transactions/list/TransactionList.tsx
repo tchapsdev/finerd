@@ -1,8 +1,10 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Paper, styled, Typography } from '@mui/material';
 import { lowerCase, truncate, upperCase } from 'lodash';
+import { useContext } from 'react';
 
 import variables from '../../../../styles/variables.module.scss';
 import { Transaction } from '../../../../types/@finerd';
+import { actions, Context, setCurrentTransaction } from '../../../context/Context';
 
 const EmptyCard = styled(Paper)({
 	backgroundColor: variables.secondaryFaded4,
@@ -10,7 +12,6 @@ const EmptyCard = styled(Paper)({
 	textAlign: 'center',
 });
 
-// todo: add onClick handler to open edit transaction dialog
 export const TransactionList = ({ transactions }: { transactions: Transaction[] }) => {
 	if (!transactions.length) {
 		return (
@@ -26,11 +27,22 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
 		);
 	}
 
+	const { dispatch } = useContext(Context);
+
+	const openTransactionModal = (transaction: Transaction) => {
+		dispatch({ data: true, type: actions.SET_IS_TRANSACTION_MODAL_OPENED });
+		dispatch(setCurrentTransaction(transaction));
+	};
+
 	return (
 		<Grid container alignItems="center" justifyContent="space-between" sx={{ pb: 13, px: 1, rowGap: 2 }}>
 			{transactions.map(transaction => (
 				<Grid item xs={12} md={6} key={`${transaction.type}-transaction-${transaction.id}`}>
-					<CardActionArea>
+					<CardActionArea
+						onClick={() => {
+							openTransactionModal(transaction);
+						}}
+					>
 						<Card variant="outlined" sx={{ display: 'flex', flexDirection: 'row', width: 'inherit' }}>
 							<CardMedia
 								component="img"

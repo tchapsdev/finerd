@@ -7,7 +7,7 @@ export const actions = {
 	SET_CURRENT_TRANSACTION: 'set-current-transaction',
 	SET_CURRENT_USER: 'set-current-user',
 	SET_IS_LOADING: 'set-is-loading',
-	SET_STATS_EXPANDED: 'set-stats-expanded',
+	SET_IS_TRANSACTION_MODAL_OPENED: 'set-is-transaction-modal-opened',
 } as const;
 
 declare type ActionKeys = keyof typeof actions;
@@ -23,7 +23,7 @@ declare type ContextStore = {
 	currentUser?: User;
 	currentPanel?: number;
 	isLoading?: boolean;
-	isStatsExpanded?: boolean;
+	isTransactionModalOpened?: boolean;
 	readonly supportedTransactions: Transaction['type'][];
 };
 
@@ -32,7 +32,7 @@ export const Context = createContext<any>({});
 export const initialState: ContextStore = {
 	currentPanel: 0,
 	isLoading: false,
-	isStatsExpanded: false,
+	isTransactionModalOpened: false,
 	supportedTransactions: ['expense', 'saving', 'income'],
 };
 
@@ -45,9 +45,9 @@ export const contextReducer = (state: ContextStore, action: Action) => {
 		case actions.SET_CURRENT_PANEL:
 			return { ...state, currentPanel: action.data };
 		case actions.SET_IS_LOADING:
-			return { ...state, isLoading: action.data };
-		case actions.SET_STATS_EXPANDED:
-			return { ...state, isStatsExpanded: action.data };
+			return { ...state, isLoading: !!action.data };
+		case actions.SET_IS_TRANSACTION_MODAL_OPENED:
+			return { ...state, isTransactionModalOpened: !!action.data };
 		default:
 			throw new Error(`Unhandled action type: ${action.type}`);
 	}
