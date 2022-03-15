@@ -1,6 +1,5 @@
 {
     "name": "finerd",
-    "homepage": "https://tchapsdev.github.io/finerd/", 
     "version": "1.0.0",
     "description": "personal finance pwa",
     "private": true,
@@ -14,9 +13,7 @@
         "format": "prettier --write 'pages/{,**/}*.ts' 'src/{,**/}*.ts'",
         "lint": "eslint \"**/*.{ts,tsx}\"",
         "lint:fix": "eslint --fix \"./{pages,src}/**/*.{ts,tsx}\"",
-        "posttest": "yarn lint",
-        "predeploy": "yarn run build",
-        "deploy": "gh-pages -d build"
+        "posttest": "yarn lint"
     },
     "husky": {
         "hooks": {
