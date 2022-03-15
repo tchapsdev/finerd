@@ -3,10 +3,12 @@ import { useState } from 'react';
 import ReactWheelPicker from 'react-simple-wheel-picker';
 
 import variables from '../../../../styles/variables.module.scss';
+import { Transaction } from '../../../../types/@finerd';
 
 type WheelPickerProps = {
 	data: Readonly<string[]>;
 	type: 'category' | 'paymentMethod';
+	transaction?: Transaction;
 };
 
 const FormCard = styled(Paper)(`
@@ -19,11 +21,15 @@ const FormCard = styled(Paper)(`
     }
 `);
 
-export const WheelPicker = ({ data, type }: WheelPickerProps) => {
+export const WheelPicker = ({ data, type, transaction }: WheelPickerProps) => {
 	const content = data.map(datum => ({
 		id: datum.toLowerCase(),
 		value: datum.toLowerCase(),
 	}));
+
+	const selectedId = transaction
+		? content[data.indexOf(transaction[type])]?.id
+		: content[Math.floor(content.length / 2)].id;
 
 	const [value, setValue] = useState('');
 
@@ -36,7 +42,7 @@ export const WheelPicker = ({ data, type }: WheelPickerProps) => {
 			<ReactWheelPicker
 				data={content}
 				onChange={handleOnChange}
-				selectedID={content[content.length / 2].id}
+				selectedID={selectedId}
 				height={120}
 				itemHeight={30}
 				color={variables.secondaryFaded2}

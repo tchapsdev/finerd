@@ -15,10 +15,11 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import { ChangeEvent, FormEvent, useRef } from 'react';
+import { ChangeEvent, FormEvent, useContext, useRef } from 'react';
 
 import variables from '../../../../styles/variables.module.scss';
-import { supportedExpenses } from '../../../constants';
+import { supportedCategories, supportedPaymentMethods } from '../../../constants';
+import { actions, Context } from '../../../context/Context';
 import { WheelPicker } from '../picker/WheelPicker';
 
 const CameraButton = styled(Button)(`
@@ -80,13 +81,21 @@ const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
 const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 	event.preventDefault();
 	const data = new FormData(event.currentTarget);
-	console.log({
-		email: data.get('email'),
-		password: data.get('password'),
-	});
+	console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5', JSON.stringify(data), event);
 };
 
 export const TransactionForm = () => {
+	const {
+		state: { currentTransaction: transaction, currentPanel, supportedTransactions },
+		dispatch,
+	} = useContext(Context);
+
+	const closeModal = () => {
+		dispatch({ data: false, type: actions.SET_IS_TRANSACTION_MODAL_OPENED });
+		dispatch({ data: undefined, type: actions.SET_CURRENT_TRANSACTION });
+	};
+
+	const transactionType = supportedTransactions[currentPanel];
 	const imageInputRef = useRef<HTMLInputElement>(null);
 
 	const handleCameraButtonClick = () => {
@@ -99,13 +108,13 @@ export const TransactionForm = () => {
 		<Container component="main" maxWidth="md" sx={{ height: '100%' }}>
 			<Grid container alignItems="center" sx={{ pb: 2, pt: 1 }}>
 				<Box sx={{ display: 'flex', flexDirection: 'column', width: '5%' }}>
-					<IconButton edge="start">
+					<IconButton edge="start" onClick={closeModal}>
 						<ArrowBackIosSharpIcon />
 					</IconButton>
 				</Box>
 				<Box sx={{ display: 'flex', flexDirection: 'column', width: '95%' }}>
 					<Typography variant="h6" align="center">
-						Expenses
+						{transactionType.toUpperCase()}
 					</Typography>
 				</Box>
 			</Grid>
@@ -121,7 +130,11 @@ export const TransactionForm = () => {
 					<Typography variant="subtitle1" sx={{ pb: 1 }}>
 						CATEGORY
 					</Typography>
-					<WheelPicker data={supportedExpenses} type={'category'} />
+					<WheelPicker
+						data={supportedCategories[transactionType]}
+						type={'category'}
+						transaction={transaction}
+					/>
 					<Input
 						inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
 						margin="normal"
@@ -130,7 +143,7 @@ export const TransactionForm = () => {
 						id="amount"
 						label="AMOUNT"
 						name="amount"
-						value={undefined}
+						value={transaction?.amount}
 						autoComplete="off"
 						sx={{ mt: 3 }}
 					/>
@@ -143,13 +156,14 @@ export const TransactionForm = () => {
 						label="DESCRIPTION"
 						type="text"
 						id="description"
+						value={transaction?.description}
 						autoComplete="off"
 						sx={{ mb: 2 }}
 					/>
 					<Typography variant="subtitle1" sx={{ pb: 1 }}>
 						PAYMENT METHOD
 					</Typography>
-					<WheelPicker data={supportedExpenses} type={'paymentMethod'} />
+					<WheelPicker data={supportedPaymentMethods} type={'paymentMethod'} transaction={transaction} />
 					<input
 						type="file"
 						accept="image/*"
@@ -157,18 +171,18 @@ export const TransactionForm = () => {
 						ref={imageInputRef}
 						onChange={handleImageChange}
 					/>
-					<Card sx={{ maxHeight: '150px', mb: 3 }}>
-						<CardMedia
-							component="img"
-							height="auto"
-							width="100%"
-							image={
-								'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'
-							}
-							alt="green iguana"
-							sx={{ objectFit: 'cover' }}
-						/>
-					</Card>
+					{transaction?.image && (
+						<Card variant="outlined" sx={{ maxHeight: '150px', mb: 3 }}>
+							<CardMedia
+								component="img"
+								height="auto"
+								width="100%"
+								image={URL.createObjectURL(transaction.image)}
+								alt="invoice"
+								sx={{ objectFit: 'cover' }}
+							/>
+						</Card>
+					)}
 					<CameraButton
 						fullWidth
 						variant="outlined"
@@ -185,7 +199,7 @@ export const TransactionForm = () => {
 					>
 						<Toolbar sx={{ justifyContent: 'center' }}>
 							<Actions size="large" fullWidth>
-								<Button className="danger">DELETE</Button>
+								{transaction && <Button className="danger">DELETE</Button>}
 								<Button className="success" type="submit">
 									SAVE
 								</Button>
