@@ -1,0 +1,65 @@
+// Primary Colors
+$primary: #4eccc4;
+$primary-light: #70d5cf;
+$primary-dark: #3f9f9f;
+
+$primary-faded-1: #92ded9;
+$primary-faded-2: #b4e7e4;
+$primary-faded-3: #d6f0ee;
+
+// Secondary Colors
+$secondary: #546869;
+$secondary-light: #758586;
+$secondary-dark: #3f4f4f;
+
+$secondary-faded-1: #96a2a3;
+$secondary-faded-2: #b6bfbf;
+$secondary-faded-3: #ecf1f1;
+$secondary-faded-4: #f7f9f9;
+
+// Alert Colors
+$alert: #eb4c4c;
+$alert-light: #ee6f6f;
+$alert-dark: #c93232;
+
+$alert-faded-1: #f09191;
+$alert-faded-2: #f3b4b4;
+$alert-faded-3: #f5d6d6;
+
+// Status Colors
+$danger: $alert;
+$success: $primary;
+$info: $secondary;
+
+// Typography
+$base-font-family: 'Roboto, sans-serif';
+$base-font-size: 16px;
+$base-font-number: 18;
+
+:export {
+    primary: $primary;
+    primaryLight: $primary-light;
+    primaryDark: $primary-dark;
+    primaryFaded1: $primary-faded-1;
+    primaryFaded2: $primary-faded-2;
+    primaryFaded3: $primary-faded-3;
+    secondary: $secondary;
+    secondaryLight: $secondary-light;
+    secondaryDark: $secondary-dark;
+    secondaryFaded1: $secondary-faded-1;
+    secondaryFaded2: $secondary-faded-2;
+    secondaryFaded3: $secondary-faded-3;
+    secondaryFaded4: $secondary-faded-4;
+    alert: $alert;
+    alertLight: $alert-light;
+    alertDark: $alert-dark;
+    alertFaded1: $alert-faded-1;
+    alertFaded2: $alert-faded-2;
+    alertFaded3: $alert-faded-3;
+    danger: $danger;
+    success: $success;
+    info: $info;
+    baseFontFamily: $base-font-family;
+    baseFontSize: $base-font-size;
+    baseFontNumber: $base-font-number;
+}

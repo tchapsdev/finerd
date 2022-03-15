@@ -147,5 +147,17 @@ module.exports = {
         'import/first': 'error',
         'import/newline-after-import': 'error',
         'import/no-duplicates': 'error',
+        // Prettier config
+        'prettier/prettier': [
+            'error', {
+                'useTabs': true,
+                'printWidth': 120,
+                'tabWidth': 4,
+                'singleQuote': true,
+                'trailingComma': 'es5',
+                'arrowParens': 'avoid',
+                'semi': true,
+            },
+        ],
     },
 };
