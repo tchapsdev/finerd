@@ -1,11 +1,9 @@
 {
-    "useTabs": false,
-    "tabs": true,
+    "useTabs": true,
     "printWidth": 120,
     "tabWidth": 4,
     "singleQuote": true,
     "trailingComma": "es5",
     "arrowParens": "avoid",
-    "semi": true,
-    "maxLineLength": 120
+    "semi": true
 }
