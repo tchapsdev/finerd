@@ -1,5 +1,5 @@
-import { LocalStorageService } from './LocalStorageService';
 import { Transaction } from '../../types/@finerd';
+import { LocalStorageService } from './LocalStorageService';
 
 export class TransactionService extends LocalStorageService<Transaction> {
     protected key = 'transactions';

@@ -1,10 +1,11 @@
 import { createContext } from 'react';
+
 import { Transaction, User } from '../../../types/@finerd';
 
 export const actions = {
+    SET_CURRENT_PANEL: 'set-current-panel',
     SET_CURRENT_TRANSACTION: 'set-current-transaction',
     SET_CURRENT_USER: 'set-current-user',
-    SET_CURRENT_PANEL: 'set-current-panel',
     SET_IS_LOADING: 'set-is-loading',
     SET_STATS_EXPANDED: 'set-stats-expanded',
 } as const;
@@ -53,13 +54,13 @@ export const contextReducer = (state: ContextStore, action: Action) => {
 };
 
 export const setCurrentTransaction = (data: Transaction) => ({
-    type: actions.SET_CURRENT_TRANSACTION,
     data,
+    type: actions.SET_CURRENT_TRANSACTION,
 });
 
 export const setCurrentUser = (data: User) => ({
-    type: actions.SET_CURRENT_USER,
     data,
+    type: actions.SET_CURRENT_USER,
 });
 
 export const ContextProvider = Context.Provider;

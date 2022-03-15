@@ -1,12 +1,12 @@
 import { Grid, Tab, Tabs, Typography } from '@mui/material';
 import { SyntheticEvent, useContext, useEffect, useState } from 'react';
 
-import { actions, Context } from '../../context/Context';
 import { TransactionService } from '../../../service/TransactionService';
+import { actions, Context } from '../../context/Context';
 
 const indexToProps = (index: number) => ({
-    id: `navbar-tab-${index}`,
     'aria-controls': `panel-${index}`,
+    id: `navbar-tab-${index}`,
     key: `navbar-tab-${index}`,
 });
 
@@ -17,7 +17,7 @@ export const Navbar = () => {
     } = useContext(Context);
 
     const handleChange = (event: SyntheticEvent, tabIndex: number) => {
-        dispatch({ type: actions.SET_CURRENT_PANEL, data: tabIndex });
+        dispatch({ data: tabIndex, type: actions.SET_CURRENT_PANEL });
     };
 
     const [balance, setBalance] = useState(0);
@@ -32,16 +32,14 @@ export const Navbar = () => {
             {/* todo: logo and login menu*/}
             <Grid item xs={12}>
                 <Tabs className="tabs tabs-boxed" value={current} onChange={handleChange} centered>
-                    {
-                        tabs.map((tab, index) => (
-                            <Tab className="tab" label={tab} {...indexToProps(index)} />
-                        ))
-                    }
+                    {tabs.map((tab, index) => (
+                        <Tab className="tab" label={tab} {...indexToProps(index)} />
+                    ))}
                 </Tabs>
             </Grid>
             <Grid item xs={12}>
                 <Typography variant="h2" align="center" sx={{ fontWeight: 'bold' }}>
-                    {new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(balance)}
+                    {new Intl.NumberFormat('en-CA', { currency: 'CAD', style: 'currency' }).format(balance)}
                 </Typography>
             </Grid>
         </Grid>

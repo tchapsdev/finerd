@@ -1,33 +1,33 @@
-import { useState } from 'react';
-import { Transaction } from '../../../src/model/transaction';
-import TransactionService from '../../../src/service/transaction_service';
+// import { useState } from 'react';
+// import { Transaction } from '../../../src/model/transaction';
+// import TransactionService from '../../../src/service/transaction_service';
 
 const FormTransaction = () => { 
-  const initialFormData = new Transaction();  
-  initialFormData.id = 0
-  initialFormData.transaction_type_id = 1
-  initialFormData.category_id = 1
-  initialFormData.descritpion = 'Description 1'
-  initialFormData.montant =  15000
-  initialFormData.date = new Date();
-  initialFormData.photo= 'photo 1'
+  // const initialFormData = new Transaction();  
+  // initialFormData.id = 0
+  // initialFormData.transaction_type_id = 1
+  // initialFormData.category_id = 1
+  // initialFormData.descritpion = 'Description 1'
+  // initialFormData.montant =  15000
+  // initialFormData.date = new Date();
+  // initialFormData.photo= 'photo 1'
 
-  const [formData, updateFormData] = useState(initialFormData);
+  // const [formData, updateFormData] = useState(initialFormData);
 
   const handleChange = (e) => {
-    let inputType = '';// $(`input[name=${e.target.name}`).attr('type');
-    updateFormData({
-      ...formData,  
-      // Trimming any whitespace
-      [e.target.name]: inputType == 'number'? parseFloat(e.target.value.trim()): e.target.value.trim()
-    });
+    //let inputType = '';// $(`input[name=${e.target.name}`).attr('type');
+    // updateFormData({
+    //   ...formData,  
+    //   // Trimming any whitespace
+    //   [e.target.name]: inputType == 'number'? parseFloat(e.target.value.trim()): e.target.value.trim()
+    // });
   };
 
   const handleSubmit = (e) =>{
     e.preventDefault()
-    const service = new TransactionService();
-    service.save(formData)
-    console.log(service.getAll()) 
+    // const service = new TransactionService();
+    // service.save(formData)
+    // console.log(service.getAll()) 
   }
 
   return (

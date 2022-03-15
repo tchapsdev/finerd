@@ -12,10 +12,10 @@
         "cover:report": "nyc --reporter lcov --reporter clover --reporter text --report-dir tests/coverage/all report",
         "cover:unit": "nyc --no-clean --reporter text yarn test",
         "format": "prettier --write 'pages/{,**/}*.ts' 'src/{,**/}*.ts'",
-        "lint": "eslint './{pages,src}/**/*.ts'",
-        "lint:fix": "eslint --fix './{pages,src}/**/*.ts'",
+        "lint": "eslint \"**/*.{ts,tsx}\"",
+        "lint:fix": "eslint --fix \"./{pages,src}/**/*.{ts,tsx}\"",
         "posttest": "yarn lint",
-        "predeploy": "yarn run build",
+      
         "deploy": "gh-pages -d build"
     },
     "husky": {

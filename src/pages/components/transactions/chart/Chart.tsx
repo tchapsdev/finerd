@@ -1,56 +1,56 @@
-import dynamic from 'next/dynamic';
 import { Paper } from '@mui/material';
-import { Props } from 'react-apexcharts';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
+import { Props } from 'react-apexcharts';
 
 import { Transaction, TransactionType } from '../../../../../types/@finerd';
 import { TransactionService } from '../../../../service/TransactionService';
 
 export const config: Props = {
-    type: 'area',
     options: {
         chart: {
             id: 'transactions-chart',
             sparkline: {
-                enabled: true
-            }
+                enabled: true,
+            },
         },
         dataLabels: {
-            enabled: false
+            enabled: false,
         },
         stroke: {
             curve: 'smooth',
-            width: 1
+            width: 1,
         },
         tooltip: {
             fixed: {
-                enabled: false
+                enabled: false,
+            },
+            marker: {
+                show: false,
             },
             x: {
-                show: false
+                show: false,
             },
             y: {
                 title: {
-                    formatter: (name: string) => name
-                }
+                    formatter: (name: string) => name,
+                },
             },
-            marker: {
-                show: false
-            }
-        }
+        },
     },
-    series: []
+    series: [],
+    type: 'area',
 };
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const map: Record<TransactionType, TransactionType> = {
     expense: 'income',
+    income: 'saving',
     saving: 'expense',
-    income: 'saving'
 };
 
-export const Chart = ({ transactions, type }: { transactions: Transaction[], type: TransactionType }) => {
+export const Chart = ({ transactions, type }: { transactions: Transaction[]; type: TransactionType }) => {
     const [targetTransactions, setTargetTransactions] = useState([]);
 
     useEffect(() => {
@@ -60,13 +60,13 @@ export const Chart = ({ transactions, type }: { transactions: Transaction[], typ
 
     config.series = [
         {
+            data: transactions.map(transaction => transaction.amount),
             name: type,
-            data: transactions.map(transaction => transaction.amount)
         },
         {
+            data: targetTransactions.map(transaction => transaction.amount),
             name: map[type],
-            data: targetTransactions.map(transaction => transaction.amount)
-        }
+        },
     ];
 
     return (

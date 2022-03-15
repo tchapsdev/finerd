@@ -17,7 +17,7 @@ export const Panel = (props: TabPanelProps) => {
             aria-labelledby={`navbar-tab-${index}`}
             {...other}
         >
-            {value === index && (<>{children}</>)}
+            {value === index && <>{children}</>}
         </div>
     );
 };

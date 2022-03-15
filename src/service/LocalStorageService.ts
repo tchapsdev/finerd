@@ -36,7 +36,7 @@ export abstract class LocalStorageService<T extends { id: number; createdAt?: Da
     private readonly store = (key: string, data: T[]): void => {
         data.sort((a, b) => b.id - a.id); // keep data sorted in desc order
         localStorage.setItem(key, JSON.stringify(data));
-    }
+    };
 
     private readonly fetch = (key: string): T[] | null => JSON.parse(localStorage.getItem(key));
 }
