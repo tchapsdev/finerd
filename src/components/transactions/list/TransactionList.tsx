@@ -1,7 +1,7 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import { lowerCase, truncate, upperCase } from 'lodash';
 
-import { Transaction } from '../../../../../types/@finerd';
+import { Transaction } from '../../../../types/@finerd';
 
 // todo: add onClick handler to open edit transaction dialog
 export const TransactionList = ({ transactions }: { transactions: Transaction[] }) => (

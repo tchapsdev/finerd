@@ -3,10 +3,10 @@ import { AppBar, Box, Container, Fab, Grid, Toolbar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React, { useReducer } from 'react';
 
-import { Navbar } from './components/navbar/Navbar';
-import { Panel } from './components/panels/Panel';
-import { Transactions } from './components/transactions/Transactions';
-import { ContextProvider, contextReducer, initialState } from './context/Context';
+import { Navbar } from '../components/navbar/Navbar';
+import { Panel } from '../components/panels/Panel';
+import { Transactions } from '../components/transactions/Transactions';
+import { ContextProvider, contextReducer, initialState } from '../context/Context';
 
 const StyledFab = styled(Fab)({
     boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.14), 0px 4px 5px 0px rgba(0,0,0,0.12), 0px 1px 10px 0px rgba(0,0,0,0.08)',

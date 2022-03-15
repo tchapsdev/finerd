@@ -3,8 +3,8 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { Props } from 'react-apexcharts';
 
-import { Transaction, TransactionType } from '../../../../../types/@finerd';
-import { TransactionService } from '../../../../service/TransactionService';
+import { Transaction, TransactionType } from '../../../../types/@finerd';
+import { TransactionService } from '../../../service/TransactionService';
 
 export const config: Props = {
     options: {

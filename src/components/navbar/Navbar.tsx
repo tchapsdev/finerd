@@ -1,8 +1,8 @@
 import { Grid, Tab, Tabs, Typography } from '@mui/material';
 import { SyntheticEvent, useContext, useEffect, useState } from 'react';
 
-import { TransactionService } from '../../../service/TransactionService';
 import { actions, Context } from '../../context/Context';
+import { TransactionService } from '../../service/TransactionService';
 
 const indexToProps = (index: number) => ({
     'aria-controls': `panel-${index}`,
