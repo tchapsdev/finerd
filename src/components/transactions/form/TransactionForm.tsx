@@ -15,11 +15,13 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import { ChangeEvent, FormEvent, useContext, useRef } from 'react';
+import { ChangeEvent, useContext, useRef } from 'react';
 
 import variables from '../../../../styles/variables.module.scss';
+import { Transaction } from '../../../../types/@finerd';
 import { supportedCategories, supportedPaymentMethods } from '../../../constants';
 import { actions, Context } from '../../../context/Context';
+import { TransactionService } from '../../../service/TransactionService';
 import { WheelPicker } from '../picker/WheelPicker';
 
 const CameraButton = styled(Button)(`
@@ -67,26 +69,9 @@ const Actions = styled(ButtonGroup)({
 	},
 });
 
-const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-	const file = event.target.files?.[0];
-	if (file) {
-		const reader = new FileReader();
-		reader.readAsDataURL(file);
-		reader.onload = () => {
-			console.log(reader.result); // transaction image
-		};
-	}
-};
-
-const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-	event.preventDefault();
-	const data = new FormData(event.currentTarget);
-	console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5', JSON.stringify(data), event);
-};
-
 export const TransactionForm = () => {
 	const {
-		state: { currentTransaction: transaction, currentPanel, supportedTransactions },
+		state: { currentTransaction, currentPanel, supportedTransactions },
 		dispatch,
 	} = useContext(Context);
 
@@ -96,12 +81,35 @@ export const TransactionForm = () => {
 	};
 
 	const transactionType = supportedTransactions[currentPanel];
+	const transaction: Transaction = currentTransaction || { id: 0, type: transactionType };
+
 	const imageInputRef = useRef<HTMLInputElement>(null);
 
 	const handleCameraButtonClick = () => {
 		if (imageInputRef.current) {
 			imageInputRef.current.click();
 		}
+	};
+
+	const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+		const file = event.target.files?.[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => {
+				transaction.photo = reader.result as string;
+			};
+		}
+	};
+
+	const handleSubmit = event => {
+		event.preventDefault();
+		new TransactionService().save(transaction);
+	};
+
+	const handleDeleteTransaction = event => {
+		event.preventDefault();
+		new TransactionService().deleteById(transaction.id);
 	};
 
 	return (
@@ -134,6 +142,9 @@ export const TransactionForm = () => {
 						data={supportedCategories[transactionType]}
 						type={'category'}
 						transaction={transaction}
+						onChange={value => {
+							transaction.category = value;
+						}}
 					/>
 					<Input
 						inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
@@ -146,6 +157,9 @@ export const TransactionForm = () => {
 						value={transaction?.amount}
 						autoComplete="off"
 						sx={{ mt: 3 }}
+						onChange={event => {
+							transaction.amount = +event.target.value;
+						}}
 					/>
 					<Input
 						margin="normal"
@@ -159,11 +173,21 @@ export const TransactionForm = () => {
 						value={transaction?.description}
 						autoComplete="off"
 						sx={{ mb: 2 }}
+						onChange={event => {
+							transaction.description = event.target.value;
+						}}
 					/>
 					<Typography variant="subtitle1" sx={{ pb: 1 }}>
 						PAYMENT METHOD
 					</Typography>
-					<WheelPicker data={supportedPaymentMethods} type={'paymentMethod'} transaction={transaction} />
+					<WheelPicker
+						data={supportedPaymentMethods}
+						type={'paymentMethod'}
+						transaction={transaction}
+						onChange={value => {
+							transaction.paymentMethod = value;
+						}}
+					/>
 					<input
 						type="file"
 						accept="image/*"
@@ -171,13 +195,13 @@ export const TransactionForm = () => {
 						ref={imageInputRef}
 						onChange={handleImageChange}
 					/>
-					{transaction?.image && (
+					{transaction?.photo && (
 						<Card variant="outlined" sx={{ maxHeight: '150px', mb: 3 }}>
 							<CardMedia
 								component="img"
 								height="auto"
 								width="100%"
-								image={URL.createObjectURL(transaction.image)}
+								image={transaction.photo}
 								alt="invoice"
 								sx={{ objectFit: 'cover' }}
 							/>
@@ -199,7 +223,11 @@ export const TransactionForm = () => {
 					>
 						<Toolbar sx={{ justifyContent: 'center' }}>
 							<Actions size="large" fullWidth>
-								{transaction && <Button className="danger">DELETE</Button>}
+								{transaction.id !== 0 && (
+									<Button className="danger" onClick={handleDeleteTransaction}>
+										DELETE
+									</Button>
+								)}
 								<Button className="success" type="submit">
 									SAVE
 								</Button>
