@@ -1,9 +1,32 @@
-import { Grid, Tab, Tabs, Typography } from '@mui/material';
+import { Grid, Tab, tabClasses, Tabs, tabsClasses, Typography } from '@mui/material';
 import { SyntheticEvent, useContext, useEffect, useState } from 'react';
+import { styled } from '@mui/system';
 
 import { Menubar } from './menubar/Menubar';
 import { actions, Context } from '../../context/Context';
+import variables from '../../../../styles/variables.module.scss';
 import { TransactionService } from '../../../service/TransactionService';
+
+const TabItem = styled(Tab)(`
+    margin: auto;
+    min-height: 40px;
+    
+    &:hover,
+    &:focus,
+    &.${tabClasses.selected} {
+        border-radius: 3px;
+        background-color: ${variables.primary};
+        color: #fff;
+        -webkit-transition: all 600ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        transition: all 600ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    }
+`);
+
+const TabContainer = styled(Tabs)(`
+    .${tabsClasses.indicator} {
+        display: none;
+    }
+`);
 
 const indexToProps = (index: number) => ({
     id: `navbar-tab-${index}`,
@@ -32,15 +55,14 @@ export const Navbar = () => {
         <>
             <Menubar/>
             <Grid container alignItems="center" justifyContent="space-between" sx={{ rowGap: 3 }}>
-                {/* todo: logo and login menu*/}
                 <Grid item xs={12}>
-                    <Tabs className="tabs tabs-boxed" value={current} onChange={handleChange} centered>
+                    <TabContainer className="tabs tabs-boxed" value={current} onChange={handleChange} centered>
                         {
                             tabs.map((tab, index) => (
-                                <Tab className="tab" label={tab} {...indexToProps(index)} />
+                                <TabItem className="tab" label={tab} {...indexToProps(index)} />
                             ))
                         }
-                    </Tabs>
+                    </TabContainer>
                 </Grid>
                 <Grid item xs={12}>
                     <Typography variant="h2" align="center" sx={{ fontWeight: 'bold' }}>
