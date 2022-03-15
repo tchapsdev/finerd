@@ -23,7 +23,8 @@ export const Navbar = () => {
     };
 
     return (
-        <div>
+        <div> 
+            
             <div>
                 <Tabs className="tabs tabs-boxed bg-white" value={value} onChange={handleChange} centered>
                     <Tab className="tab text-black" label="Expenses" {...indexToProps(0)} />

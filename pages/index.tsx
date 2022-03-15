@@ -4,15 +4,17 @@ import { LineChart } from './components/charts/LineChart';
 import { TransactionList } from './components/listing/TransactionList';
 import { AddTransaction } from './components/buttons/Buttons';
 import { DeleteTransaction_Card } from './components/buttons/DeleteTransaction_Card';
+import { TransactionInfo } from './components/listing/TransactionInfo';
 
 export default function Home() {
     return (
         <div className="bg-white"  >
-            {/* <Navbar/>
-            <LineChart/>
+            <Navbar/>
+            {/* <LineChart/>
             <TransactionList/>
-            <AddTransaction/> */}
-            <DeleteTransaction_Card/>
+            <AddTransaction/>
+            <DeleteTransaction_Card/> */}
+            <TransactionInfo/>
         </div>
     )
 }
