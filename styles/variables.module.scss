@@ -34,6 +34,7 @@ $info: $secondary;
 // Typography
 $base-font-family: 'Roboto, sans-serif';
 $base-font-size: 16px;
+$base-font-number: 18;
 
 :export {
     primary: $primary;
@@ -60,4 +61,5 @@ $base-font-size: 16px;
     info: $info;
     baseFontFamily: $base-font-family;
     baseFontSize: $base-font-size;
+    baseFontNumber: $base-font-number;
 }

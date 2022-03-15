@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 
 import { Transaction, User } from '../../types/@finerd';
+import { supportedTransactions } from '../constants';
 
 export const actions = {
 	SET_CURRENT_PANEL: 'set-current-panel',
@@ -24,7 +25,7 @@ declare type ContextStore = {
 	currentPanel?: number;
 	isLoading?: boolean;
 	isTransactionModalOpened?: boolean;
-	readonly supportedTransactions: Transaction['type'][];
+	supportedTransactions: Readonly<Transaction['type'][]>;
 };
 
 export const Context = createContext<any>({});
@@ -33,7 +34,7 @@ export const initialState: ContextStore = {
 	currentPanel: 0,
 	isLoading: false,
 	isTransactionModalOpened: false,
-	supportedTransactions: ['expense', 'saving', 'income'],
+	supportedTransactions,
 };
 
 export const contextReducer = (state: ContextStore, action: Action) => {
