@@ -52,9 +52,8 @@ export const Navbar = () => {
 	}, [current, tabs]);
 
 	return (
-		<>
-			<Menubar />
-			<Grid container alignItems="center" justifyContent="space-between" sx={{ rowGap: 3 }}>
+		<Menubar>
+			<Grid container alignItems="center" justifyContent="center" sx={{ rowGap: 3 }}>
 				<Grid item xs={12}>
 					<TabContainer className="tabs tabs-boxed" value={current} onChange={handleChange} centered>
 						{tabs.map((tab, index) => (
@@ -68,6 +67,6 @@ export const Navbar = () => {
 					</Typography>
 				</Grid>
 			</Grid>
-		</>
+		</Menubar>
 	);
 };

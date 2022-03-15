@@ -14,7 +14,8 @@ $secondary-dark: #3f4f4f;
 
 $secondary-faded-1: #96a2a3;
 $secondary-faded-2: #b6bfbf;
-$secondary-faded-3: #d7dcdc;
+$secondary-faded-3: #ecf1f1;
+$secondary-faded-4: #f7f9f9;
 
 // Alert Colors
 $alert: #eb4c4c;
@@ -47,6 +48,7 @@ $base-font-size: 16px;
     secondaryFaded1: $secondary-faded-1;
     secondaryFaded2: $secondary-faded-2;
     secondaryFaded3: $secondary-faded-3;
+    secondaryFaded4: $secondary-faded-4;
     alert: $alert;
     alertLight: $alert-light;
     alertDark: $alert-dark;

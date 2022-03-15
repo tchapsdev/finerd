@@ -50,6 +50,9 @@ const map: Record<TransactionType, TransactionType> = {
 	saving: 'expense',
 };
 
+// generate a default chart data when no transactions are available
+const dummy: number[] = [0, 0.1, 0.15, 0.2, 0.3, 0.25, 0.3, 0.4, 0.45, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+
 export const Chart = ({ transactions, type }: { transactions: Transaction[]; type: TransactionType }) => {
 	const [targetTransactions, setTargetTransactions] = useState([]);
 
@@ -60,11 +63,14 @@ export const Chart = ({ transactions, type }: { transactions: Transaction[]; typ
 
 	config.series = [
 		{
-			data: transactions.map(transaction => transaction.amount),
+			data: transactions.length ? transactions.map(transaction => transaction.amount) : dummy,
 			name: type,
 		},
 		{
-			data: targetTransactions.map(transaction => transaction.amount),
+			data:
+				transactions.length || targetTransactions.length
+					? targetTransactions.map(transaction => transaction.amount)
+					: dummy,
 			name: map[type],
 		},
 	];
