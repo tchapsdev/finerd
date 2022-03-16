@@ -10,9 +10,9 @@
         "cover": "yarn cover:unit && yarn cover:report",
         "cover:report": "nyc --reporter lcov --reporter clover --reporter text --report-dir tests/coverage/all report",
         "cover:unit": "nyc --no-clean --reporter text yarn test",
-        "format": "prettier --write 'src/{,**/}*.ts'",
-        "lint": "eslint './src/**/*.{ts,tsx}'",
-        "lint:fix": "eslint --fix './src/**/*.{ts,tsx}'",
+        "format": "prettier --write \"src/{,**/}*.ts\"",
+        "lint": "eslint \"./src/**/*.{ts,tsx}\"",
+        "lint:fix": "eslint --fix \"./src/**/*.{ts,tsx}\"",
         "posttest": "yarn lint"
     },
     "husky": {

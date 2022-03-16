@@ -9,6 +9,8 @@ import { ContextProvider, contextReducer, initialState } from '../context/Contex
 
 export const Main = () => {
 	const [state, dispatch] = useReducer<any>(contextReducer, initialState);
+	const isLoading: boolean = (state as any).isLoading;
+
 	const currentPanel: number = (state as any).currentPanel;
 	const supportedTransactions = (state as any).supportedTransactions;
 
@@ -22,11 +24,11 @@ export const Main = () => {
 						</Grid>
 						<Grid item xs={12}>
 							<Panel value={currentPanel} index={currentPanel}>
-								<Transactions type={supportedTransactions[currentPanel]} />
+								<Transactions type={supportedTransactions[currentPanel]} isLoading={isLoading} />
 							</Panel>
 						</Grid>
 						<Grid item xs={12}>
-							<TransactionModal />
+							<TransactionModal isLoading={isLoading} />
 						</Grid>
 					</Grid>
 				</Box>

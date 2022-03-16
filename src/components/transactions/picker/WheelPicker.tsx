@@ -1,12 +1,14 @@
 import { Paper, styled } from '@mui/material';
-import { useState } from 'react';
 import ReactWheelPicker from 'react-simple-wheel-picker';
 
 import variables from '../../../../styles/variables.module.scss';
+import { Transaction } from '../../../../types/@finerd';
 
 type WheelPickerProps = {
 	data: Readonly<string[]>;
 	type: 'category' | 'paymentMethod';
+	transaction?: Transaction;
+	onChange: (value: string) => void;
 };
 
 const FormCard = styled(Paper)(`
@@ -19,16 +21,19 @@ const FormCard = styled(Paper)(`
     }
 `);
 
-export const WheelPicker = ({ data, type }: WheelPickerProps) => {
+export const WheelPicker = ({ data, type, transaction, onChange }: WheelPickerProps) => {
 	const content = data.map(datum => ({
 		id: datum.toLowerCase(),
 		value: datum.toLowerCase(),
 	}));
 
-	const [value, setValue] = useState('');
+	const selectedId =
+		transaction.id !== 0
+			? content[data.indexOf(transaction[type])]?.id
+			: content[Math.floor(content.length / 2)].id;
 
 	const handleOnChange = target => {
-		setValue(target.value);
+		onChange(target.value);
 	};
 
 	return (
@@ -36,7 +41,7 @@ export const WheelPicker = ({ data, type }: WheelPickerProps) => {
 			<ReactWheelPicker
 				data={content}
 				onChange={handleOnChange}
-				selectedID={content[content.length / 2].id}
+				selectedID={selectedId}
 				height={120}
 				itemHeight={30}
 				color={variables.secondaryFaded2}
@@ -46,7 +51,6 @@ export const WheelPicker = ({ data, type }: WheelPickerProps) => {
 				shadowColor="none"
 				fontSize={+variables.baseFontNumber}
 			/>
-			<input type="hidden" name={type} value={value} />
 		</FormCard>
 	);
 };
