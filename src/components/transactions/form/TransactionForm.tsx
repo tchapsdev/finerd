@@ -173,7 +173,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						id="amount"
 						label="AMOUNT"
 						name="amount"
-						value={transaction?.amount}
+						defaultValue={transaction?.amount}
 						autoComplete="off"
 						sx={{ mt: 3 }}
 						onChange={event => {
@@ -189,7 +189,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						label="DESCRIPTION"
 						type="text"
 						id="description"
-						value={transaction?.description}
+						defaultValue={transaction?.description}
 						autoComplete="off"
 						sx={{ mb: 2 }}
 						onChange={event => {

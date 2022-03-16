@@ -58,7 +58,7 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
 									<Typography variant="subtitle1" color="text.secondary" component="div">
 										{lowerCase(
 											truncate(`${transaction.paymentMethod} ${transaction.description || ''}`, {
-												length: 25,
+												length: 15,
 											})
 										)}
 									</Typography>
