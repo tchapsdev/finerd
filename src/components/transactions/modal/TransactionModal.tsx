@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { actions, Context } from '../../../context/Context';
 import { TransactionForm } from '../form/TransactionForm';
 
-export const TransactionModal = () => {
+export const TransactionModal = ({ isLoading }: { isLoading: boolean }) => {
 	const {
 		state: { isTransactionModalOpened },
 		dispatch,
@@ -17,7 +17,7 @@ export const TransactionModal = () => {
 	return (
 		<Modal open={isTransactionModalOpened} onClose={handleClose}>
 			<Box sx={{ bgcolor: 'background.paper' }}>
-				<TransactionForm />
+				<TransactionForm isLoading={isLoading} />
 			</Box>
 		</Modal>
 	);

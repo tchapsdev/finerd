@@ -1,4 +1,4 @@
-export const supportedExpenses = ['clothing', 'entertainment', 'food', 'transport', 'utilities', 'other'] as const;
+export const supportedExpenses = ['clothing', 'fun', 'food', 'transport', 'utilities', 'other'] as const;
 
 export const supportedSavingAccounts = ['rrsp', 'saving', 'tfsa', 'other'] as const;
 

@@ -8,6 +8,10 @@ import {
 	Card,
 	CardMedia,
 	Container,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
 	Grid,
 	IconButton,
 	styled,
@@ -15,11 +19,13 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import { ChangeEvent, FormEvent, useContext, useRef } from 'react';
+import { ChangeEvent, useContext, useRef, useState } from 'react';
 
 import variables from '../../../../styles/variables.module.scss';
+import { Transaction } from '../../../../types/@finerd';
 import { supportedCategories, supportedPaymentMethods } from '../../../constants';
 import { actions, Context } from '../../../context/Context';
+import { TransactionService } from '../../../service/TransactionService';
 import { WheelPicker } from '../picker/WheelPicker';
 
 const CameraButton = styled(Button)(`
@@ -67,41 +73,62 @@ const Actions = styled(ButtonGroup)({
 	},
 });
 
-const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-	const file = event.target.files?.[0];
-	if (file) {
-		const reader = new FileReader();
-		reader.readAsDataURL(file);
-		reader.onload = () => {
-			console.log(reader.result); // transaction image
-		};
-	}
-};
-
-const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-	event.preventDefault();
-	const data = new FormData(event.currentTarget);
-	console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5', JSON.stringify(data), event);
-};
-
-export const TransactionForm = () => {
+export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 	const {
-		state: { currentTransaction: transaction, currentPanel, supportedTransactions },
+		state: { currentTransaction, currentPanel, supportedTransactions },
 		dispatch,
 	} = useContext(Context);
 
 	const closeModal = () => {
 		dispatch({ data: false, type: actions.SET_IS_TRANSACTION_MODAL_OPENED });
+		dispatch({ data: !isLoading, type: actions.SET_IS_LOADING });
 		dispatch({ data: undefined, type: actions.SET_CURRENT_TRANSACTION });
 	};
 
 	const transactionType = supportedTransactions[currentPanel];
+	const transaction: Transaction = currentTransaction || { id: 0, type: transactionType };
+
+	const transactionService = new TransactionService();
 	const imageInputRef = useRef<HTMLInputElement>(null);
 
 	const handleCameraButtonClick = () => {
 		if (imageInputRef.current) {
 			imageInputRef.current.click();
 		}
+	};
+
+	const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+		const file = event.target.files?.[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = () => {
+				transaction.photo = reader.result as string;
+			};
+		}
+	};
+
+	const handleSubmit = event => {
+		event.preventDefault();
+		transactionService.save(transaction);
+		closeModal();
+	};
+
+	const handleDeleteTransaction = event => {
+		event.preventDefault();
+		transactionService.deleteById(transaction.id);
+		setOpenDeleteConfirmationDialog(false);
+		closeModal();
+	};
+
+	const [openDeleteConfirmationDialog, setOpenDeleteConfirmationDialog] = useState(false);
+
+	const handleOpenDeleteConfirmationDialog = () => {
+		setOpenDeleteConfirmationDialog(true);
+	};
+
+	const handleCloseDeleteConfirmationDialog = () => {
+		setOpenDeleteConfirmationDialog(false);
 	};
 
 	return (
@@ -134,6 +161,9 @@ export const TransactionForm = () => {
 						data={supportedCategories[transactionType]}
 						type={'category'}
 						transaction={transaction}
+						onChange={value => {
+							transaction.category = value;
+						}}
 					/>
 					<Input
 						inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
@@ -146,6 +176,9 @@ export const TransactionForm = () => {
 						value={transaction?.amount}
 						autoComplete="off"
 						sx={{ mt: 3 }}
+						onChange={event => {
+							transaction.amount = +event.target.value;
+						}}
 					/>
 					<Input
 						margin="normal"
@@ -159,11 +192,21 @@ export const TransactionForm = () => {
 						value={transaction?.description}
 						autoComplete="off"
 						sx={{ mb: 2 }}
+						onChange={event => {
+							transaction.description = event.target.value;
+						}}
 					/>
 					<Typography variant="subtitle1" sx={{ pb: 1 }}>
 						PAYMENT METHOD
 					</Typography>
-					<WheelPicker data={supportedPaymentMethods} type={'paymentMethod'} transaction={transaction} />
+					<WheelPicker
+						data={supportedPaymentMethods}
+						type={'paymentMethod'}
+						transaction={transaction}
+						onChange={value => {
+							transaction.paymentMethod = value;
+						}}
+					/>
 					<input
 						type="file"
 						accept="image/*"
@@ -171,13 +214,13 @@ export const TransactionForm = () => {
 						ref={imageInputRef}
 						onChange={handleImageChange}
 					/>
-					{transaction?.image && (
+					{transaction?.photo && (
 						<Card variant="outlined" sx={{ maxHeight: '150px', mb: 3 }}>
 							<CardMedia
 								component="img"
 								height="auto"
 								width="100%"
-								image={URL.createObjectURL(transaction.image)}
+								image={transaction.photo}
 								alt="invoice"
 								sx={{ objectFit: 'cover' }}
 							/>
@@ -199,7 +242,11 @@ export const TransactionForm = () => {
 					>
 						<Toolbar sx={{ justifyContent: 'center' }}>
 							<Actions size="large" fullWidth>
-								{transaction && <Button className="danger">DELETE</Button>}
+								{transaction.id !== 0 && (
+									<Button className="danger" onClick={handleOpenDeleteConfirmationDialog}>
+										DELETE
+									</Button>
+								)}
 								<Button className="success" type="submit">
 									SAVE
 								</Button>
@@ -208,6 +255,24 @@ export const TransactionForm = () => {
 					</AppBar>
 				</Box>
 			</Box>
+			<Dialog
+				open={openDeleteConfirmationDialog}
+				onClose={handleCloseDeleteConfirmationDialog}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogContent>
+					<DialogContentText id="alert-dialog-description" color="black">
+						Do you really want to delete that transaction?
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleCloseDeleteConfirmationDialog} autoFocus>
+						Cancel
+					</Button>
+					<Button onClick={handleDeleteTransaction}>Delete</Button>
+				</DialogActions>
+			</Dialog>
 		</Container>
 	);
 };
