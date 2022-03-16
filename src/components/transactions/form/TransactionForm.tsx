@@ -173,7 +173,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						id="amount"
 						label="AMOUNT"
 						name="amount"
-						value={transaction?.amount}
+						defaultValue={transaction?.amount}
 						autoComplete="off"
 						sx={{ mt: 3 }}
 						onChange={event => {
@@ -189,7 +189,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						label="DESCRIPTION"
 						type="text"
 						id="description"
-						value={transaction?.description}
+						defaultValue={transaction?.description}
 						autoComplete="off"
 						sx={{ mb: 2 }}
 						onChange={event => {
@@ -263,14 +263,16 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 			>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description" color="black">
-						Do you really want to delete that transaction?
+						Do you really want to delete this transaction?
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleCloseDeleteConfirmationDialog} autoFocus>
+					<Button onClick={handleCloseDeleteConfirmationDialog} autoFocus sx={{ color: variables.secondary }}>
 						Cancel
 					</Button>
-					<Button onClick={handleDeleteTransaction}>Delete</Button>
+					<Button onClick={handleDeleteTransaction} sx={{ color: variables.danger }}>
+						Delete
+					</Button>
 				</DialogActions>
 			</Dialog>
 		</Container>
