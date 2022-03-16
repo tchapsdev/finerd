@@ -8,6 +8,10 @@ import {
 	Card,
 	CardMedia,
 	Container,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
 	Grid,
 	IconButton,
 	styled,
@@ -15,7 +19,7 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import { ChangeEvent, useContext, useRef } from 'react';
+import { ChangeEvent, useContext, useRef, useState } from 'react';
 
 import variables from '../../../../styles/variables.module.scss';
 import { Transaction } from '../../../../types/@finerd';
@@ -113,7 +117,18 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 	const handleDeleteTransaction = event => {
 		event.preventDefault();
 		transactionService.deleteById(transaction.id);
+		setOpenDeleteConfirmationDialog(false);
 		closeModal();
+	};
+
+	const [openDeleteConfirmationDialog, setOpenDeleteConfirmationDialog] = useState(false);
+
+	const handleOpenDeleteConfirmationDialog = () => {
+		setOpenDeleteConfirmationDialog(true);
+	};
+
+	const handleCloseDeleteConfirmationDialog = () => {
+		setOpenDeleteConfirmationDialog(false);
 	};
 
 	return (
@@ -228,7 +243,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						<Toolbar sx={{ justifyContent: 'center' }}>
 							<Actions size="large" fullWidth>
 								{transaction.id !== 0 && (
-									<Button className="danger" onClick={handleDeleteTransaction}>
+									<Button className="danger" onClick={handleOpenDeleteConfirmationDialog}>
 										DELETE
 									</Button>
 								)}
@@ -240,6 +255,24 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 					</AppBar>
 				</Box>
 			</Box>
+			<Dialog
+				open={openDeleteConfirmationDialog}
+				onClose={handleCloseDeleteConfirmationDialog}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogContent>
+					<DialogContentText id="alert-dialog-description" color="black">
+						Do you really want to delete that transaction?
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleCloseDeleteConfirmationDialog} autoFocus>
+						Cancel
+					</Button>
+					<Button onClick={handleDeleteTransaction}>Delete</Button>
+				</DialogActions>
+			</Dialog>
 		</Container>
 	);
 };
