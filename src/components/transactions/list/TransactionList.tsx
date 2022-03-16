@@ -35,7 +35,13 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
 	};
 
 	return (
-		<Grid container spacing={2} alignItems="center" justifyContent="space-between" sx={{ pb: 13, px: 1, rowGap: 0.5 }}>
+		<Grid
+			container
+			spacing={2}
+			alignItems="center"
+			justifyContent="space-between"
+			sx={{ pb: 13, px: 1, rowGap: 0.5 }}
+		>
 			{transactions.map(transaction => (
 				<Grid item xs={12} sm={6} md={6} key={`${transaction.type}-transaction-${transaction.id}`}>
 					<CardActionArea
