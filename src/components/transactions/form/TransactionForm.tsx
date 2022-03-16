@@ -263,14 +263,16 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 			>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description" color="black">
-						Do you really want to delete that transaction?
+						Do you really want to delete this transaction?
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleCloseDeleteConfirmationDialog} autoFocus>
+					<Button onClick={handleCloseDeleteConfirmationDialog} autoFocus sx={{ color: variables.secondary }}>
 						Cancel
 					</Button>
-					<Button onClick={handleDeleteTransaction}>Delete</Button>
+					<Button onClick={handleDeleteTransaction} sx={{ color: variables.danger }}>
+						Delete
+					</Button>
 				</DialogActions>
 			</Dialog>
 		</Container>
