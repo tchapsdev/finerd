@@ -5,19 +5,16 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {ConfirmDelete} from'./popupConfirm';
 
-export default function AlertDialog() {
+export  function ConfirmDelete() {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
-    
   };
 
   const handleClose = () => {
     setOpen(false);
-   
   };
 
   return (
@@ -36,16 +33,13 @@ export default function AlertDialog() {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description" color='black'>
-            Do you really want to delete that transaction?
+            Transaction deleted
           </DialogContentText>
         </DialogContent>
         <DialogActions >
          
-          <Button onClick={handleClose} autoFocus>Cancel</Button>
-          <ConfirmDelete />
         </DialogActions>
   </Dialog>
-  
     </div>
   );
 }

@@ -186,7 +186,8 @@ export const TransactionForm = () => {
 					>
 						<Toolbar sx={{ justifyContent: 'center' }}>
 							<Actions size="large" fullWidth>
-								<Button className="danger" onClick={AlertDialog}>DELETE</Button>
+							<AlertDialog />
+								
 								<Button className="success" type="submit">
 									SAVE
 								</Button>
