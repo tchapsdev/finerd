@@ -1,9 +1,9 @@
 {
     "name": "finerd personal finance app",
     "short_name": "finerd",
-    "theme_color": "#ffffff",
-    "background_color": "#004740",
-    "display": "fullscreen",
+    "theme_color": "#4eccc4",
+    "background_color": "#ffffff",
+    "display": "standalone",
     "orientation": "portrait-primary",
     "scope": "/",
     "start_url": "/",
