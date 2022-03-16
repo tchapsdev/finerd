@@ -32,6 +32,7 @@ const CameraButton = styled(Button)(`
     border: 1px solid rgba(0, 0, 0, 0.23);
     broder-radius: 4;
     color: ${variables.secondary};
+    text-transform: none;
     
     .Mui-focused, :focus, :hover {
         border: 1px solid rgba(0, 0, 0, 0.23);
@@ -133,14 +134,14 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 
 	return (
 		<Container component="main" maxWidth="md" sx={{ height: '100%' }}>
-			<Grid container alignItems="center" sx={{ pb: 2, pt: 1 }}>
+			<Grid container alignItems="center" sx={{ pb: 1, pt: 1 }}>
 				<Box sx={{ display: 'flex', flexDirection: 'column', width: '5%' }}>
 					<IconButton edge="start" onClick={closeModal}>
-						<ArrowBackIosSharpIcon />
+						<ArrowBackIosSharpIcon fontSize="small" />
 					</IconButton>
 				</Box>
 				<Box sx={{ display: 'flex', flexDirection: 'column', width: '95%' }}>
-					<Typography variant="h6" align="center">
+					<Typography variant="subtitle1" align="center">
 						{transactionType.toUpperCase()}
 					</Typography>
 				</Box>
@@ -154,9 +155,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 				}}
 			>
 				<Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off">
-					<Typography variant="subtitle1" sx={{ pb: 1 }}>
-						CATEGORY
-					</Typography>
+					<Typography variant="subtitle1">category</Typography>
 					<WheelPicker
 						data={supportedCategories[transactionType]}
 						type={'category'}
@@ -171,9 +170,9 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						required
 						fullWidth
 						id="amount"
-						label="AMOUNT"
+						label="amount"
 						name="amount"
-						defaultValue={transaction?.amount}
+						defaultValue={transaction.amount !== 0 ? transaction.amount : ''}
 						autoComplete="off"
 						sx={{ mt: 3 }}
 						onChange={event => {
@@ -186,7 +185,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						multiline
 						rows={2}
 						name="description"
-						label="DESCRIPTION"
+						label="description"
 						type="text"
 						id="description"
 						defaultValue={transaction?.description}
@@ -196,9 +195,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 							transaction.description = event.target.value;
 						}}
 					/>
-					<Typography variant="subtitle1" sx={{ pb: 1 }}>
-						PAYMENT METHOD
-					</Typography>
+					<Typography variant="subtitle1">payment method</Typography>
 					<WheelPicker
 						data={supportedPaymentMethods}
 						type={'paymentMethod'}
@@ -232,13 +229,13 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						startIcon={<CameraAltIcon />}
 						onClick={handleCameraButtonClick}
 					>
-						PHOTO
+						<Typography variant="subtitle1">photo</Typography>
 					</CameraButton>
 					<AppBar
 						position="fixed"
 						color="inherit"
 						elevation={0}
-						sx={{ bottom: 10, boxShadow: 'none', top: 'auto' }}
+						sx={{ bottom: 0, boxShadow: 'none', left: 0, m: 'auto', maxWidth: '494px', p: 0, top: 'auto' }}
 					>
 						<Toolbar sx={{ justifyContent: 'center' }}>
 							<Actions size="large" fullWidth>

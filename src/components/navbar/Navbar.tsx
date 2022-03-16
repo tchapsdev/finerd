@@ -34,7 +34,7 @@ const indexToProps = (index: number) => ({
 	key: `navbar-tab-${index}`,
 });
 
-export const Navbar = () => {
+export const Navbar = ({ isLoading }: { isLoading: boolean }) => {
 	const {
 		state: { currentPanel: current, supportedTransactions: tabs },
 		dispatch,
@@ -49,7 +49,7 @@ export const Navbar = () => {
 	useEffect(() => {
 		const transactionService = new TransactionService();
 		setBalance(transactionService.getBalanceByType(tabs[current]));
-	}, [current, tabs]);
+	}, [current, tabs, isLoading]);
 
 	return (
 		<Menubar>
