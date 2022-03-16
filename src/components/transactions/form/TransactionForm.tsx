@@ -86,7 +86,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 	};
 
 	const transactionType = supportedTransactions[currentPanel];
-	const transaction: Transaction = currentTransaction || { id: 0, type: transactionType };
+	const transaction: Transaction = currentTransaction || { id: 0, type: transactionType, amount: 0 };
 
 	const transactionService = new TransactionService();
 	const imageInputRef = useRef<HTMLInputElement>(null);
