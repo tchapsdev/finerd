@@ -57,7 +57,7 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
 									</Typography>
 									<Typography variant="subtitle1" color="text.secondary" component="div">
 										{lowerCase(
-											truncate(`${transaction.paymentMethod} ${transaction.description}`, {
+											truncate(`${transaction.paymentMethod} ${transaction.description || ''}`, {
 												length: 25,
 											})
 										)}
@@ -74,7 +74,7 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
 										}).format(transaction.amount)}
 									</Typography>
 									<Typography variant="subtitle1" color="text.secondary" component="div">
-										{new Intl.DateTimeFormat('en-CA').format(transaction.createdAt)}
+										{new Intl.DateTimeFormat('en-CA').format(new Date(transaction.createdAt))}
 									</Typography>
 								</CardContent>
 							</Box>

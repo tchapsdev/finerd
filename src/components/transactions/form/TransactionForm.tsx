@@ -69,7 +69,7 @@ const Actions = styled(ButtonGroup)({
 	},
 });
 
-export const TransactionForm = () => {
+export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 	const {
 		state: { currentTransaction, currentPanel, supportedTransactions },
 		dispatch,
@@ -77,12 +77,14 @@ export const TransactionForm = () => {
 
 	const closeModal = () => {
 		dispatch({ data: false, type: actions.SET_IS_TRANSACTION_MODAL_OPENED });
+		dispatch({ data: !isLoading, type: actions.SET_IS_LOADING });
 		dispatch({ data: undefined, type: actions.SET_CURRENT_TRANSACTION });
 	};
 
 	const transactionType = supportedTransactions[currentPanel];
 	const transaction: Transaction = currentTransaction || { id: 0, type: transactionType };
 
+	const transactionService = new TransactionService();
 	const imageInputRef = useRef<HTMLInputElement>(null);
 
 	const handleCameraButtonClick = () => {
@@ -104,12 +106,14 @@ export const TransactionForm = () => {
 
 	const handleSubmit = event => {
 		event.preventDefault();
-		new TransactionService().save(transaction);
+		transactionService.save(transaction);
+		closeModal();
 	};
 
 	const handleDeleteTransaction = event => {
 		event.preventDefault();
-		new TransactionService().deleteById(transaction.id);
+		transactionService.deleteById(transaction.id);
+		closeModal();
 	};
 
 	return (
