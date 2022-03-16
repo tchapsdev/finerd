@@ -16,10 +16,10 @@ export const Transactions = ({ type, isLoading }: { type: TransactionType; isLoa
 
 	return (
 		<Grid container alignItems="flex-start" justifyContent="space-between" sx={{ rowGap: 3 }}>
-			<Grid item xs={12} md={5}>
+			<Grid item xs={12} sm={12} md={4} sx={{ px: 2 }}>
 				<Chart transactions={transactions} type={type} />
 			</Grid>
-			<Grid item xs={12} md={7}>
+			<Grid item xs={12} sm={12} md={8}>
 				<TransactionList transactions={transactions} />
 			</Grid>
 		</Grid>

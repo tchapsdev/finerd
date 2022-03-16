@@ -35,9 +35,15 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
 	};
 
 	return (
-		<Grid container alignItems="center" justifyContent="space-between" sx={{ pb: 13, px: 1, rowGap: 2 }}>
+		<Grid
+			container
+			spacing={2}
+			alignItems="center"
+			justifyContent="space-between"
+			sx={{ pb: 13, px: 1, rowGap: 0.5 }}
+		>
 			{transactions.map(transaction => (
-				<Grid item xs={12} md={6} key={`${transaction.type}-transaction-${transaction.id}`}>
+				<Grid item xs={12} sm={6} md={6} key={`${transaction.type}-transaction-${transaction.id}`}>
 					<CardActionArea
 						onClick={() => {
 							openTransactionModal(transaction);
@@ -67,13 +73,13 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
 							<Box sx={{ flexGrow: 1 }} />
 							<Box sx={{ display: 'flex', flexDirection: 'column', width: '30%' }}>
 								<CardContent sx={{ textAlign: 'right' }}>
-									<Typography component="div" variant="h6">
+									<Typography component="div" sx={{ fontWeight: 'bold' }}>
 										{new Intl.NumberFormat('en-CA', {
 											currency: 'CAD',
 											style: 'currency',
 										}).format(transaction.amount)}
 									</Typography>
-									<Typography variant="subtitle1" color="text.secondary" component="div">
+									<Typography variant="subtitle2" color="text.secondary" component="div">
 										{new Intl.DateTimeFormat('en-CA').format(new Date(transaction.createdAt))}
 									</Typography>
 								</CardContent>
