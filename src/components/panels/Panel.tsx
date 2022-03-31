@@ -42,7 +42,7 @@ export const Panel = (props: TabPanelProps) => {
 			>
 				{value === index && <>{children}</>}
 			</div>
-			<AppBar position="fixed" color="inherit" elevation={0} sx={{ bottom: 0, boxShadow: 'none', top: 'auto' }}>
+			<AppBar position="fixed" color="transparent" elevation={0} sx={{  bottom: 0, boxShadow: 'none', top: 'auto' }}>
 				<Toolbar>
 					<FloatingButton aria-label="add" onClick={openTransactionModal}>
 						<AddIcon />

@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 
 export const Menubar = ({ children }: { children?: ReactNode }) => (
 	<Box sx={{ flexGrow: 1 }}>
-		<AppBar position="static" color="inherit" elevation={0} sx={{ boxShadow: 'none' }}>
+		<AppBar position="fixed" color="inherit" elevation={0} sx={{ boxShadow: 'none' }}>
 			<Container maxWidth={false}>
 				<Toolbar variant="dense" sx={{ pt: 0 }}>
 					<Box sx={{ display: { xs: 'flex' }, flexGrow: 1 }}>
@@ -24,5 +24,9 @@ export const Menubar = ({ children }: { children?: ReactNode }) => (
 			</Container>
 			{<>{children}</>}
 		</AppBar>
+		<div style={{ paddingTop: `200px`}} />
+		
+
+		
 	</Box>
 );
