@@ -1,8 +1,8 @@
 import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import { TransactionType } from '../../../types/@finerd';
 import { TransactionService } from '../../service/TransactionService';
+import { TransactionType } from '../../types';
 import { Chart } from './chart/Chart';
 import { TransactionList } from './list/TransactionList';
 

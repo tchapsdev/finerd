@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
-import { Transaction, User } from '../../types/@finerd';
 import { supportedTransactions } from '../constants';
+import { Transaction, User } from '../types';
 
 export const actions = {
 	SET_CURRENT_PANEL: 'set-current-panel',

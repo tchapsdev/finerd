@@ -20,7 +20,7 @@ export const Main = () => {
 				<Box sx={{ flexGrow: 1 }}>
 					<Grid container spacing={2}>
 						<Grid item xs={12}>
-							<Navbar isLoading={isLoading} />
+							<Navbar />
 						</Grid>
 						<Grid item xs={12}>
 							<Panel value={currentPanel} index={currentPanel}>

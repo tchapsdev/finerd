@@ -29,7 +29,7 @@
         "strict": true,
         "strictNullChecks": false,
         "target": "es2019",
-        "typeRoots": ["./node_modules/@types", "./types"]
+        "typeRoots": ["./node_modules/@types"]
     },
     "include": [
         "next-env.d.ts",

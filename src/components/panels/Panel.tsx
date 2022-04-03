@@ -13,13 +13,12 @@ interface TabPanelProps {
 }
 
 const FloatingButton = styled(Fab)({
+	bottom: 16,
 	boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.12), 0px 4px 5px 0px rgba(0,0,0,0.10), 0px 1px 10px 0px rgba(0,0,0,0.06)',
 	color: variables.secondaryDark,
-	left: 0,
 	margin: '0 auto',
 	position: 'absolute',
-	right: 0,
-	top: -30,
+	right: 16,
 	zIndex: 1,
 });
 
@@ -42,7 +41,12 @@ export const Panel = (props: TabPanelProps) => {
 			>
 				{value === index && <>{children}</>}
 			</div>
-			<AppBar position="fixed" color="transparent" elevation={0} sx={{  bottom: 0, boxShadow: 'none', top: 'auto' }}>
+			<AppBar
+				position="fixed"
+				color="transparent"
+				elevation={0}
+				sx={{ bottom: 0, boxShadow: 'none', top: 'auto' }}
+			>
 				<Toolbar>
 					<FloatingButton aria-label="add" onClick={openTransactionModal}>
 						<AddIcon />

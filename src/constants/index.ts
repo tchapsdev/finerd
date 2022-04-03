@@ -6,8 +6,6 @@ export const supportedIncomeSources = ['bonus', 'commission', 'dividend', 'salar
 
 export const supportedTransactions = ['expense', 'income', 'saving'] as const;
 
-export const supportedPaymentMethods = ['cash', 'checking', 'credit', 'debit', 'other'] as const;
-
 export const supportedCategories = {
 	expense: supportedExpenses,
 	income: supportedIncomeSources,

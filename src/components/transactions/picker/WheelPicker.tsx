@@ -2,11 +2,11 @@ import { Paper, styled } from '@mui/material';
 import ReactWheelPicker from 'react-simple-wheel-picker';
 
 import variables from '../../../../styles/variables.module.scss';
-import { Transaction } from '../../../../types/@finerd';
+import { Transaction } from '../../../types';
 
 type WheelPickerProps = {
 	data: Readonly<string[]>;
-	type: 'category' | 'paymentMethod';
+	type: 'category';
 	transaction?: Transaction;
 	onChange: (value: string) => void;
 };

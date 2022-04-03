@@ -1,4 +1,4 @@
-import { Transaction } from '../../types/@finerd';
+import { Transaction } from '../types';
 import { LocalStorageService } from './LocalStorageService';
 
 export class TransactionService extends LocalStorageService<Transaction> {

@@ -22,10 +22,10 @@ import {
 import { ChangeEvent, useContext, useRef, useState } from 'react';
 
 import variables from '../../../../styles/variables.module.scss';
-import { Transaction } from '../../../../types/@finerd';
-import { supportedCategories, supportedPaymentMethods } from '../../../constants';
+import { supportedCategories } from '../../../constants';
 import { actions, Context } from '../../../context/Context';
 import { TransactionService } from '../../../service/TransactionService';
+import { Transaction, TransactionType } from '../../../types';
 import { WheelPicker } from '../picker/WheelPicker';
 
 const CameraButton = styled(Button)(`
@@ -86,7 +86,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 		dispatch({ data: undefined, type: actions.SET_CURRENT_TRANSACTION });
 	};
 
-	const transactionType = supportedTransactions[currentPanel];
+	const transactionType: TransactionType = supportedTransactions[currentPanel];
 	const transaction: Transaction = currentTransaction || { amount: 0, id: 0, type: transactionType };
 
 	const transactionService = new TransactionService();
@@ -111,6 +111,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 
 	const handleSubmit = event => {
 		event.preventDefault();
+		// todo: validate fields
 		transactionService.save(transaction);
 		closeModal();
 	};
@@ -161,7 +162,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						type={'category'}
 						transaction={transaction}
 						onChange={value => {
-							transaction.category = value;
+							transaction.category = value as Transaction['category'];
 						}}
 					/>
 					<Input
@@ -193,15 +194,6 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						sx={{ mb: 2 }}
 						onChange={event => {
 							transaction.description = event.target.value;
-						}}
-					/>
-					<Typography variant="subtitle1">payment method</Typography>
-					<WheelPicker
-						data={supportedPaymentMethods}
-						type={'paymentMethod'}
-						transaction={transaction}
-						onChange={value => {
-							transaction.paymentMethod = value;
 						}}
 					/>
 					<input

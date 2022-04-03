@@ -1,11 +1,10 @@
-import { Grid, Tab, tabClasses, Tabs, tabsClasses, Typography } from '@mui/material';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import { AppBar, Box, Container, Grid, IconButton, Tab, tabClasses, Tabs, tabsClasses, Toolbar } from '@mui/material';
 import { styled } from '@mui/system';
-import { SyntheticEvent, useContext, useEffect, useState } from 'react';
+import { SyntheticEvent, useContext } from 'react';
 
 import variables from '../../../styles/variables.module.scss';
 import { actions, Context } from '../../context/Context';
-import { TransactionService } from '../../service/TransactionService';
-import { Menubar } from './menubar/Menubar';
 
 const TabItem = styled(Tab)(`
     margin: auto;
@@ -34,7 +33,7 @@ const indexToProps = (index: number) => ({
 	key: `navbar-tab-${index}`,
 });
 
-export const Navbar = ({ isLoading }: { isLoading: boolean }) => {
+export const Navbar = () => {
 	const {
 		state: { currentPanel: current, supportedTransactions: tabs },
 		dispatch,
@@ -44,29 +43,32 @@ export const Navbar = ({ isLoading }: { isLoading: boolean }) => {
 		dispatch({ data: tabIndex, type: actions.SET_CURRENT_PANEL });
 	};
 
-	const [balance, setBalance] = useState(0);
-
-	useEffect(() => {
-		const transactionService = new TransactionService();
-		setBalance(transactionService.getBalanceByType(tabs[current]));
-	}, [current, tabs, isLoading]);
-
 	return (
-		<Menubar>
-			<Grid container alignItems="center" justifyContent="center" sx={{ rowGap: 3 }}>
-				<Grid item xs={12}>
-					<TabContainer className="tabs tabs-boxed" value={current} onChange={handleChange} centered>
-						{tabs.map((tab, index) => (
-							<TabItem className="tab" label={tab} {...indexToProps(index)} />
-						))}
-					</TabContainer>
-				</Grid>
-				<Grid item xs={12}>
-					<Typography variant="h2" align="center" sx={{ fontWeight: 'bold' }}>
-						{new Intl.NumberFormat('en-CA', { currency: 'CAD', style: 'currency' }).format(balance)}
-					</Typography>
-				</Grid>
-			</Grid>
-		</Menubar>
+		<Box sx={{ flexGrow: 1, mb: 10, p: 0 }}>
+			<AppBar position="fixed" color="inherit" elevation={0} sx={{ boxShadow: 'none', m: 0, p: 0, pt: 2 }}>
+				<Container maxWidth={false}>
+					<Toolbar disableGutters={true} variant="dense">
+						<Grid container alignItems="center" justifyContent="space-between">
+							<Grid item xs={12}>
+								<TabContainer
+									className="tabs tabs-boxed"
+									value={current}
+									onChange={handleChange}
+									variant="fullWidth"
+								>
+									{tabs.map((tab, index) => (
+										<TabItem className="tab" label={tab} {...indexToProps(index)} />
+									))}
+									<IconButton edge="end" color="inherit">
+										<MoreIcon />
+										{/* todo: add handler to open menu with sign up or log out options */}
+									</IconButton>
+								</TabContainer>
+							</Grid>
+						</Grid>
+					</Toolbar>
+				</Container>
+			</AppBar>
+		</Box>
 	);
 };

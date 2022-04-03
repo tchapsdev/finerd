@@ -1,12 +1,12 @@
-import { Paper } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
 import { Props } from 'react-apexcharts';
 
-import { Transaction, TransactionType } from '../../../../types/@finerd';
-import { TransactionService } from '../../../service/TransactionService';
+import variables from '../../../../styles/variables.module.scss';
+import { Transaction, TransactionType } from '../../../types';
 
 export const config: Props = {
+	height: '150%',
 	options: {
 		chart: {
 			id: 'transactions-chart',
@@ -14,6 +14,7 @@ export const config: Props = {
 				enabled: true,
 			},
 		},
+		colors: ['#16dae0', '#4eccc4', '#0088FE', '#00C49F', '#FFBB28', '#FF8042'],
 		dataLabels: {
 			enabled: false,
 		},
@@ -42,42 +43,68 @@ export const config: Props = {
 	type: 'area',
 };
 
-const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
+const emptyChartConfig: Props = JSON.parse(JSON.stringify(config));
+emptyChartConfig.series = [
+	{
+		data: [0, 0.05, 0.1, 0.12, 0.15, 0.12, 0.1, 0.05, 0],
+		name: 'dummy',
+	},
+];
 
-const map: Record<TransactionType, TransactionType> = {
-	expense: 'income',
-	income: 'saving',
-	saving: 'expense',
+emptyChartConfig.options.chart.id = 'empty-transactions-chart';
+emptyChartConfig.options.colors = [variables.primaryFaded2, variables.primaryFaded3];
+
+emptyChartConfig.options.subtitle = {
+	align: 'center',
+	floating: true,
+	offsetY: 200,
+	style: {
+		color: variables.alertFaded1,
+		fontSize: variables.baseFontSize,
+	},
+	text: 'add your first transaction',
 };
 
-// generate a default chart data when no transactions are available
-const dummy: number[] = [0, 0.1, 0.15, 0.2, 0.3, 0.25, 0.3, 0.4, 0.45, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
+/**
+ * By default, Next.js pre-renders every page.
+ * This means that Next.js generates HTML for each page in advance, instead of having it all done by client-side JavaScript.
+ * Pre-rendering can result in better performance and SEO.
+ *
+ * Each generated HTML is associated with minimal JavaScript code necessary for that page.
+ * When a page is loaded by the browser, its JavaScript code runs and makes the page fully interactive.
+ * (This process is called hydration.)
+ *
+ * Next.js supports ES2020 dynamic import() for JavaScript.
+ * With it, you can import JavaScript modules dynamically and work with them.
+ *
+ * React components can also be imported using dynamic imports,
+ * but in this case we use it in conjunction with next/dynamic to make sure it works like any other React Component.
+ *
+ * In this instance dynamic import is used with ssr disable to prevent next js from pre-rendering the component.
+ * Thus allows its execution by the client.
+ *
+ * @link https://nextjs.org/docs/basic-features/pages#pre-rendering
+ * @link https://nextjs.org/docs/advanced-features/dynamic-import
+ */
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-export const Chart = ({ transactions, type }: { transactions: Transaction[]; type: TransactionType }) => {
-	const [targetTransactions, setTargetTransactions] = useState([]);
+// todo - display x-axis and y-axis labels
 
-	useEffect(() => {
-		const transactionService = new TransactionService();
-		setTargetTransactions(transactionService.findAllByType(map[type]));
-	}, [type, map]);
+export const Chart = ({ transactions, type: name }: { transactions: Transaction[]; type: TransactionType }) => {
+	const data = transactions.map((transaction: Transaction) => transaction.amount);
+	const balance = transactions.length ? transactions.reduce((acc, transaction) => acc + transaction.amount, 0) : 0;
 
-	config.series = [
-		{
-			data: transactions.length ? transactions.map(transaction => transaction.amount) : dummy,
-			name: type,
-		},
-		{
-			data:
-				transactions.length || targetTransactions.length
-					? targetTransactions.map(transaction => transaction.amount)
-					: dummy,
-			name: map[type],
-		},
-	];
+	config.series = [{ data, name }];
 
 	return (
-		<Paper elevation={0}>
-			<ReactApexChart {...config} />
-		</Paper>
+		<>
+			<Typography variant="h2" align="center" sx={{ fontWeight: 'bold' }}>
+				{new Intl.NumberFormat('en-CA', { currency: 'CAD', style: 'currency' }).format(balance)}
+			</Typography>
+			<Paper elevation={0}>
+				{!transactions.length && <ReactApexChart {...emptyChartConfig} />}
+				{transactions.length > 0 && <ReactApexChart {...config} />}
+			</Paper>
+		</>
 	);
 };
