@@ -45,7 +45,7 @@ export const Panel = (props: TabPanelProps) => {
 				position="fixed"
 				color="transparent"
 				elevation={0}
-				sx={{ bottom: 0, boxShadow: 'none', top: 'auto' }}
+				sx={{ bottom: 0, boxShadow: 'none', top: 'auto', width: 'fit-content' }}
 			>
 				<Toolbar>
 					<FloatingButton aria-label="add" onClick={openTransactionModal}>
