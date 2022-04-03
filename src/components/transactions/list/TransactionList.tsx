@@ -1,5 +1,5 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Paper, styled, Typography } from '@mui/material';
-import { upperCase } from 'lodash';
+import { lowerCase, truncate, upperCase } from 'lodash';
 import { useContext } from 'react';
 
 import variables from '../../../../styles/variables.module.scss';
@@ -35,13 +35,7 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
 	};
 
 	return (
-		<Grid
-			container
-			spacing={2}
-			alignItems="center"
-			justifyContent="space-between"
-			sx={{ pb: 3, px: 1, rowGap: 0.5 }}
-		>
+		<Grid container spacing={2} alignItems="center" justifyContent="space-between" sx={{ px: 1 }}>
 			{transactions.map(transaction => (
 				<Grid item xs={12} sm={6} md={6} key={`${transaction.type}-transaction-${transaction.id}`}>
 					<CardActionArea
@@ -58,9 +52,14 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
 							/>
 							<Box sx={{ display: 'flex', flexDirection: 'column', width: '50%' }}>
 								<CardContent sx={{ flex: '1 0 auto' }}>
-									<Typography component="div" variant="h6">
+									<Typography component="div" variant="subtitle1">
 										{upperCase(transaction.category)}
 									</Typography>
+									{transaction.description && (
+										<Typography variant="subtitle2" color="text.secondary" component="div">
+											{lowerCase(truncate(transaction.description, { length: 15 }))}
+										</Typography>
+									)}
 								</CardContent>
 							</Box>
 							<Box sx={{ flexGrow: 1 }} />
