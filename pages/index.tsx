@@ -5,6 +5,8 @@ import { TransactionList } from './components/listing/TransactionList';
 import { AddTransaction } from './components/buttons/Buttons';
 import { DeleteTransaction_Card } from './components/buttons/DeleteTransaction_Card';
 import { TransactionInfo } from './components/listing/TransactionInfo';
+import SignUP from './components/logins/signUP';
+import SignIN from './components/logins/signIN';
 
 export default function Home() {
     return (
@@ -14,7 +16,12 @@ export default function Home() {
             <TransactionList/>
             <AddTransaction/>
             <DeleteTransaction_Card/> */}
-            <TransactionInfo/>
+            {/* <TransactionInfo/> */}
+            {/* <logins/> */}
+            {/* <SignIN/> */}
+            <SignUP/>
+
+            
         </div>
     )
 }
