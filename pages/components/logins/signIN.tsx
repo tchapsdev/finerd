@@ -14,38 +14,38 @@ import Typography from '@mui/material/Typography';
 
 
 interface State {
-  email:string;
+  email: string;
   password: string;
   showPassword: boolean;
 }
 
 let theme = createTheme({
-    typography: {
-      h1: {
-        fontSize: 15,
-        fontWeight: 550,
-      },
-      h2: {
-        fontSize: 15,
-        fontWeight: 600,
-        color: 'green',
-      },
-      h3: {
-        fontSize: 15,
-        fontWeight: 540,
-        fontStyle: 'italic',
-      },
-      button: {
-        fontWeight: 800,
-      },
+  typography: {
+    h1: {
+      fontSize: 15,
+      fontWeight: 550,
     },
-  });
+    h2: {
+      fontSize: 15,
+      fontWeight: 600,
+      color: 'green',
+    },
+    h3: {
+      fontSize: 15,
+      fontWeight: 540,
+      fontStyle: 'italic',
+    },
+    button: {
+      fontWeight: 800,
+    },
+  },
+});
 
-  theme = responsiveFontSizes(theme);
+theme = responsiveFontSizes(theme);
 
 export default function signIN() {
   const [values, setValues] = React.useState<State>({
-    email:'',
+    email: '',
     password: '',
     showPassword: false,
   });
@@ -67,88 +67,100 @@ export default function signIN() {
   };
 
   return (
-    <Grid 
-    container 
-    columns={{ xs: 4, md: 12}}
-    direction="column"
-    justifyContent="center"
-    alignItems="flex-start"
-    sx={{m:2}}
+    <Grid
+      container
+      columns={{ xs: 8, md: 12 }}
+      direction="column"
+      sx={{ m: 2 }}
     >
-        <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
 
-        <Grid item xs={2} >
-            <TextField sx={{ m: 1, width: '80vh' }}
-            required
-            id="outlined-search" 
-            label="Email" 
-            type="search" 
-            value={values.email}
 
-            />  
+        <Grid item sx={{ m:1 }} xs={2} sm={4} md={4} > <Typography variant="h1">finerd &nbsp;</Typography> </Grid>
 
-        <FormControl sx={{ m: 1, width: '80vh' }} variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-            <OutlinedInput
+
+        <Grid item >
+          <Grid item xs={8} sm={12} md={11} >
+            <TextField sx={{ m: 1, width: '91%' }}
+              required
+              id="outlined-search"
+              label="Email"
+              type="search"
+              value={values.email}
+            />
+          </Grid>
+
+
+
+
+
+          <Grid item xs={8} sm={12} md={11} >
+            <FormControl sx={{ m: 1, width: '91%' }} variant="outlined">
+              <InputLabel htmlFor="outlined-adornment-password">Password *</InputLabel>
+              <OutlinedInput
                 required
                 id="outlined-adornment-password"
                 type={values.showPassword ? 'text' : 'password'}
                 value={values.password}
                 onChange={handleChange('password')}
                 endAdornment={
-                <InputAdornment position="end">
+                  <InputAdornment position="end">
                     <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
                     >
-                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
-                </InputAdornment>
+                  </InputAdornment>
                 }
                 label="Password"
-                
-            />
-        </FormControl>
+              />
+            </FormControl>
+          </Grid>
 
-        <Button variant="contained" color="success" sx={{m:1, width:"80vh"}}>
-            Sign in
-        </Button>
+          
 
-        
+          <Grid container xs={6} sm={8} md={10} justifyContent="flex-start"
+            alignItems="flex-start"
+            sx={{ ml: 1 }}
+          >
+            <Button variant="contained" color="success" sx={{ my: 2, width: "100%" }}>
+              Sign up
+            </Button>
+          </Grid>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ mt: 2 }}
+          >
+            <Grid item > <Typography variant="h1">Don't have an account yet ?</Typography> </Grid>
+            <Grid item > <Typography variant="h2">&nbsp;Sign up ?</Typography> </Grid>
+          </Grid>
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ ml: 1, mb: 1 }}
+            xs
+          >
+            <Grid item > <Typography variant="h1">Or &nbsp;</Typography> </Grid>
+            <Grid item > <u><Typography variant="h3">continue as guest</Typography> </u> </Grid>
+          </Grid>
+        </Grid>
+
+
+
+
+      </ThemeProvider>
+
+
     </Grid>
 
 
-
-    <Grid 
-    container
-    direction="row"
-    justifyContent="flex-start"
-    alignItems="center"
-    sx={{ mt: 2 }}
-    >
-        <Grid item > <Typography variant="h1">Don't have an account yet ?</Typography> </Grid>
-        <Grid item > <Typography variant="h2">&nbsp;Sign up ?</Typography> </Grid>
-    </Grid>
-    <Grid 
-    container
-    direction="row"
-    justifyContent="flex-start"
-    alignItems="center"
-    sx={{ mb: 1 }}
-    
-    >
-        <Grid item > <Typography variant="h1">Or &nbsp;</Typography> </Grid>
-        <Grid item > <u><Typography variant="h3">continue as guest</Typography> </u> </Grid>
-    </Grid>
-
-
-    </ThemeProvider>
-
-        
-</Grid>
-
-    
   );
 }

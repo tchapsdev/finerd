@@ -18,8 +18,8 @@ export default function Home() {
             <DeleteTransaction_Card/> */}
             {/* <TransactionInfo/> */}
             {/* <logins/> */}
-            {/* <SignIN/> */}
-            <SignUP/>
+            <SignIN/>
+            {/* <SignUP/> */}
 
             
         </div>
