@@ -11,7 +11,7 @@ export const config: Props = {
 		chart: {
 			id: 'transactions-chart',
 			sparkline: {
-				enabled: true,
+				enabled: false,
 			},
 		},
 		colors: ['#16dae0', '#4eccc4', '#0088FE', '#00C49F', '#FFBB28', '#FF8042'],
@@ -22,6 +22,7 @@ export const config: Props = {
 			curve: 'smooth',
 			width: 1,
 		},
+		
 		tooltip: {
 			fixed: {
 				enabled: false,
