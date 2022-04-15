@@ -10,7 +10,6 @@ const TabItem = styled(Tab)(`
     margin: auto;
     min-height: 40px;
     
-    &:hover,
     &:focus,
     &.${tabClasses.selected} {
         border-radius: 3px;
