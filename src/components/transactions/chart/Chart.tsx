@@ -22,7 +22,7 @@ export const config: Props = {
 			curve: 'smooth',
 			width: 1,
 		},
-		
+
 		tooltip: {
 			fixed: {
 				enabled: false,

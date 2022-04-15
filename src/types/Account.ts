@@ -1,4 +1,3 @@
-
 declare type Account = {
 	id: number;
 	firstName: string;
