@@ -10,34 +10,55 @@ export const config: Props = {
 	options: {
 		chart: {
 			id: 'transactions-chart',
+			selection: {
+				enabled: true,
+			},
 			sparkline: {
 				enabled: false,
+			},
+			toolbar: {
+				show: false,
+			},
+			width: '100%',
+			zoom: {
+				enabled: true,
 			},
 		},
 		colors: ['#16dae0', '#4eccc4', '#0088FE', '#00C49F', '#FFBB28', '#FF8042'],
 		dataLabels: {
 			enabled: false,
 		},
+		grid: {
+			padding: {
+				bottom: 0,
+				left: 0,
+				right: 0,
+				top: 0,
+			},
+			position: 'back',
+			show: false,
+		},
 		stroke: {
 			curve: 'smooth',
 			width: 1,
 		},
-		
 		tooltip: {
-			fixed: {
-				enabled: false,
-			},
-			marker: {
-				show: false,
-			},
 			x: {
 				show: false,
 			},
 			y: {
-				title: {
-					formatter: (name: string) => name,
-				},
+				formatter: (val: number): string =>
+					new Intl.NumberFormat('en-CA', {
+						currency: 'CAD',
+						style: 'currency',
+					}).format(val),
 			},
+		},
+		xaxis: {
+			type: 'datetime',
+		},
+		yaxis: {
+			show: false,
 		},
 	},
 	series: [],
@@ -45,15 +66,19 @@ export const config: Props = {
 };
 
 const emptyChartConfig: Props = JSON.parse(JSON.stringify(config));
+
+emptyChartConfig.options.chart.id = 'empty-transactions-chart';
+emptyChartConfig.options.chart.sparkline.enabled = true;
+
+emptyChartConfig.options.colors = [variables.primaryFaded2, variables.primaryFaded3];
+emptyChartConfig.options.xaxis = undefined;
+
 emptyChartConfig.series = [
 	{
 		data: [0, 0.05, 0.1, 0.12, 0.15, 0.12, 0.1, 0.05, 0],
 		name: 'dummy',
 	},
 ];
-
-emptyChartConfig.options.chart.id = 'empty-transactions-chart';
-emptyChartConfig.options.colors = [variables.primaryFaded2, variables.primaryFaded3];
 
 emptyChartConfig.options.subtitle = {
 	align: 'center',
@@ -81,7 +106,7 @@ emptyChartConfig.options.subtitle = {
  * React components can also be imported using dynamic imports,
  * but in this case we use it in conjunction with next/dynamic to make sure it works like any other React Component.
  *
- * In this instance dynamic import is used with ssr disable to prevent next js from pre-rendering the component.
+ * In this instance, dynamic import is used with ssr disable to prevent next js from pre-rendering the component.
  * Thus allows its execution by the client.
  *
  * @link https://nextjs.org/docs/basic-features/pages#pre-rendering
@@ -89,12 +114,13 @@ emptyChartConfig.options.subtitle = {
  */
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-// todo - display x-axis and y-axis labels
-
 export const Chart = ({ transactions, type: name }: { transactions: Transaction[]; type: TransactionType }) => {
-	const data = transactions.map((transaction: Transaction) => transaction.amount);
-	const balance = transactions.length ? transactions.reduce((acc, transaction) => acc + transaction.amount, 0) : 0;
+	const data = transactions.map((transaction: Transaction) => ({
+		x: transaction.createdAt.toISOString(),
+		y: transaction.amount,
+	}));
 
+	const balance = transactions.length ? transactions.reduce((acc, transaction) => acc + transaction.amount, 0) : 0;
 	config.series = [{ data, name }];
 
 	return (
