@@ -11,9 +11,8 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-
-
-
+import { Account } from '../../types';
+import { AccountService } from '../../service/AccountService';
 
 let theme = createTheme({
     typography: {
@@ -47,24 +46,26 @@ let theme = createTheme({
 theme = responsiveFontSizes(theme);
 
 interface State {
-    FName: string;
-    LName: string;
+    firstName: string;
+    lastName: string;
     email: string;
     password: string;
-    passwordR: string;
+    confirmPassword: string;
     showPassword: boolean;
 }
 
 
 export default function signUP() {
     const [values, setValues] = React.useState<State>({
-        FName: '',
-        LName: '',
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
-        passwordR: '',
+        confirmPassword: '',
         showPassword: false,
     });
+
+    const account: Account = values || { firstName: '', lastName: '', email: '', password: '', confirmPassword: '', };
 
     const handleChange =
         (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,6 +83,13 @@ export default function signUP() {
         event.preventDefault();
     };
 
+    
+  const handleSignUp = (event) => {
+    var service = new AccountService();
+    console.log(account);
+    service.signUp(account);
+  };
+
     return (
         <Grid
             container
@@ -90,26 +98,27 @@ export default function signUP() {
             sx={{ m: 2 }}
         >
             <ThemeProvider theme={theme}>
-
-
                 <Grid item sx={{ mb: 4, mt: 2 }} xs={2} sm={4} md={4} > <Typography variant="h1">Create an account &nbsp;</Typography> </Grid>
 
-                <Grid container spacing={-10} columns={16}                         justifyContent="flex-start"
+                <Grid container spacing={-10} columns={16} justifyContent="flex-start"
 >
                     <Grid item xs={8} sm={8} md={4}>
                         <TextField sx={{ ml: 1, width: '95%', mb:1}}
                             required
-                            id="First_Name"
+                            id="firstName"
                             label="First Name"
-                            value={values.FName}
+                            value={values.firstName}
+                            onChange={handleChange('firstName')}
+
                         />
                     </Grid>
                     <Grid item xs={8} sm={8} md={4}>
                         <TextField sx={{ width: '95%', ml: 1,mb:1 }}
                             required
-                            id="Last_Name"
+                            id="lastName"
                             label="Last Name"
-                            value={values.LName}
+                            value={values.lastName}
+                            onChange={handleChange('lastName')}
                         />
                     </Grid>
                 </Grid>
@@ -118,15 +127,12 @@ export default function signUP() {
                         <TextField sx={{ m: 1, width: '176%' }}
                             required
                             id="outlined-search"
-                            label="Email"
-                            type="search"
+                            label="email"
+                            type="email"
                             value={values.email}
+                            onChange={handleChange('email')}
                         />
                     </Grid>
-
-
-
-
 
                     <Grid item xs={2} sm={4} md={4} >
                         <FormControl sx={{ m: 1, width: '176%' }} variant="outlined">
@@ -154,7 +160,6 @@ export default function signUP() {
                         </FormControl>
                     </Grid>
 
-
                     <Grid item xs={2} sm={4} md={4} >
                         <FormControl sx={{ m: 1, width: '176%' }} variant="outlined">
                             <InputLabel htmlFor="outlined-adornment-password">Repeat password *</InputLabel>
@@ -162,8 +167,8 @@ export default function signUP() {
                                 required
                                 id="outlined-adornment-password"
                                 type={values.showPassword ? 'text' : 'password'}
-                                value={values.password}
-                                onChange={handleChange('password')}
+                                value={values.confirmPassword}
+                                onChange={handleChange('confirmPassword')}
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
@@ -199,7 +204,7 @@ export default function signUP() {
                         alignItems="center"
                         sx={{ ml: 1 }}
                     >
-                        <Button variant="contained" color="success" sx={{ my: 2, width: "80%" }}>
+                        <Button variant="contained" color="success" sx={{ my: 2, width: "80%" }} onClick={handleSignUp} >
                             Sign up
                         </Button>
                     </Grid>
@@ -215,9 +220,6 @@ export default function signUP() {
                         <Grid item > <Typography variant="h4">Sign in &nbsp;</Typography> </Grid>
                     </Grid>
                 </Grid>
-
-
-
 
             </ThemeProvider>
 

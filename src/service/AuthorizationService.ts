@@ -1,15 +1,15 @@
 // https://www.bezkoder.com/react-typescript-api-call/
  import AuthToken from '../types';
-// import http from './http-common';
 import { LocalStorageService } from './LocalStorageService';
 
 export class AuthorizationService extends LocalStorageService<AuthToken> {
 	protected key = 'auth';
 	public readonly getToken = (): string => {
 		const authModel = this.fetchObject(this.key);
-		debugger;
 		if(authModel) {
-			return authModel.accessToken;
+			const token = authModel.accessToken;
+			window.access_token = token;
+			return token;
 		}
 		return '';
 	};

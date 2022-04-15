@@ -7,7 +7,6 @@ export class HttpService<T> extends LocalStorageService<T> {
     
     private getconfig = (): any => {
         const service = new AuthorizationService();
-        debugger;
         return {
             headers: {
                 "Content-type": "application/json",

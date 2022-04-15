@@ -12,7 +12,6 @@ import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import {AccountService} from '../../service/AccountService';
-import { AuthorizationService } from '../../service/AuthorizationService';
 import { Account } from '../../types';
 
 
