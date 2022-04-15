@@ -12,31 +12,34 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 
+import { AccountService } from '../../service/AccountService';
+import { Account } from '../../types';
+
 let theme = createTheme({
 	typography: {
+		button: {
+			fontWeight: 800,
+		},
 		h1: {
+			color: 'black',
 			fontSize: 50,
 			fontWeight: 600,
-			color: 'black',
 		},
 		h2: {
+			color: 'black',
 			fontSize: 15,
 			fontWeight: 550,
-			color: 'black',
 		},
 		h3: {
 			fontSize: 15,
-			fontWeight: 500,
 			fontStyle: 'italic',
+			fontWeight: 500,
 		},
 		h4: {
-			fontSize: 15,
-			fontWeight: 550,
 			color: 'green',
+			fontSize: 15,
 			fontStyle: 'italic',
-		},
-		button: {
-			fontWeight: 800,
+			fontWeight: 550,
 		},
 	},
 });
@@ -44,23 +47,25 @@ let theme = createTheme({
 theme = responsiveFontSizes(theme);
 
 interface State {
-	FName: string;
-	LName: string;
+	firstName: string;
+	lastName: string;
 	email: string;
 	password: string;
-	passwordR: string;
+	confirmPassword: string;
 	showPassword: boolean;
 }
 
 export default function signUP() {
 	const [values, setValues] = React.useState<State>({
-		FName: '',
-		LName: '',
+		confirmPassword: '',
 		email: '',
+		firstName: '',
+		lastName: '',
 		password: '',
-		passwordR: '',
 		showPassword: false,
 	});
+
+	const account: Account = values || { confirmPassword: '', email: '', firstName: '', lastName: '', password: '' };
 
 	const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -77,6 +82,11 @@ export default function signUP() {
 		event.preventDefault();
 	};
 
+	const handleSignUp = () => {
+		let service = new AccountService();
+		service.signUp(account);
+	};
+
 	return (
 		<Grid container columns={{ xs: 4, md: 12 }} direction="column" sx={{ m: 2 }}>
 			<ThemeProvider theme={theme}>
@@ -90,18 +100,20 @@ export default function signUP() {
 						<TextField
 							sx={{ ml: 1, width: '95%', mb: 1 }}
 							required
-							id="First_Name"
+							id="firstName"
 							label="First Name"
-							value={values.FName}
+							value={values.firstName}
+							onChange={handleChange('firstName')}
 						/>
 					</Grid>
 					<Grid item xs={8} sm={8} md={4}>
 						<TextField
 							sx={{ width: '95%', ml: 1, mb: 1 }}
 							required
-							id="Last_Name"
+							id="lastName"
 							label="Last Name"
-							value={values.LName}
+							value={values.lastName}
+							onChange={handleChange('lastName')}
 						/>
 					</Grid>
 				</Grid>
@@ -111,9 +123,10 @@ export default function signUP() {
 							sx={{ m: 1, width: '176%' }}
 							required
 							id="outlined-search"
-							label="Email"
-							type="search"
+							label="email"
+							type="email"
 							value={values.email}
+							onChange={handleChange('email')}
 						/>
 					</Grid>
 
@@ -150,8 +163,8 @@ export default function signUP() {
 								required
 								id="outlined-adornment-password"
 								type={values.showPassword ? 'text' : 'password'}
-								value={values.password}
-								onChange={handleChange('password')}
+								value={values.confirmPassword}
+								onChange={handleChange('confirmPassword')}
 								endAdornment={
 									<InputAdornment position="end">
 										<IconButton
@@ -217,7 +230,7 @@ export default function signUP() {
 						alignItems="center"
 						sx={{ ml: 1 }}
 					>
-						<Button variant="contained" color="success" sx={{ my: 2, width: '80%' }}>
+						<Button variant="contained" color="success" sx={{ my: 2, width: '80%' }} onClick={handleSignUp}>
 							Sign up
 						</Button>
 					</Grid>
