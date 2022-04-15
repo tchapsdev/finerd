@@ -33,6 +33,7 @@
         "@mui/icons-material": "^5.5.0",
         "@mui/material": "^5.5.0",
         "apexcharts": "^3.26.1",
+        "axios": "^0.26.1",
         "gh-pages": "^3.2.3",
         "next": "latest",
         "next-pwa": "^5.4.1",

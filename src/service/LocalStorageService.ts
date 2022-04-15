@@ -37,4 +37,24 @@ export abstract class LocalStorageService<T extends { id: number; createdAt?: Da
 	};
 
 	private readonly fetch = (key: string): T[] | null => JSON.parse(localStorage.getItem(key));
+
+	public readonly fetchObject = (key: string): T | null => {
+		if (typeof window !== 'undefined') {
+			return JSON.parse(localStorage.getItem(key));
+		} else {
+			console.log(`LOcal storage not ready. Can not get '${key}' from STORE`);
+		}
+		return null;
+	};
+
+	public readonly storeObject = (key: string, data: T): void => localStorage.setItem(key, JSON.stringify(data));
+
+	// public readonly fetchString = (key: string): string | null => {
+	// 	if (typeof window !== 'undefined') {
+	// 		return localStorage.getItem(key);
+	// 	} else {
+	// 		console.log(`LOcal storage not ready. Get not get '${key}'`);
+	// 	}
+	// };
+	// public readonly storeString = (key: string, data: string): void => localStorage.setItem(key, data);
 }

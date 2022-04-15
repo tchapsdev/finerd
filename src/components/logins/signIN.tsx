@@ -11,6 +11,9 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import {AccountService} from '../../service/AccountService';
+import { AuthorizationService } from '../../service/AuthorizationService';
+import { Account } from '../../types';
 
 
 interface State {
@@ -50,6 +53,8 @@ export default function signIN() {
     showPassword: false,
   });
 
+  const account: Account = values || { email: '', password:'' };
+
   const handleChange =
     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
       setValues({ ...values, [prop]: event.target.value });
@@ -64,6 +69,12 @@ export default function signIN() {
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+  };
+
+  const handleSignIn = (event) => {
+    var service = new AccountService();
+    console.log(account);
+    service.login(account);
   };
 
   return (
@@ -85,8 +96,8 @@ export default function signIN() {
               required
               id="outlined-search"
               label="Email"
-              type="search"
-              value={values.email}
+              type="text"
+              onChange={handleChange('email')}
             />
           </Grid>
 
@@ -98,7 +109,6 @@ export default function signIN() {
                 required
                 id="outlined-adornment-password"
                 type={values.showPassword ? 'text' : 'password'}
-                value={values.password}
                 onChange={handleChange('password')}
                 endAdornment={
                   <InputAdornment position="end">
@@ -123,7 +133,7 @@ export default function signIN() {
             alignItems="flex-start"
             sx={{ ml: 1 }}
           >
-            <Button variant="contained" color="success" sx={{ my: 2, width: "100%" }}>
+            <Button variant="contained" color="success" sx={{ my: 2, width: "100%" }}  onClick={handleSignIn} >
               Sign up
             </Button>
           </Grid>

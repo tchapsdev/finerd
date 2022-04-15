@@ -1,5 +1,6 @@
 import { Box, Container, Grid } from '@mui/material';
 import React, { useReducer } from 'react';
+import SignIN from '../components/logins/signIN';
 
 import { Navbar } from '../components/navbar/Navbar';
 import { Panel } from '../components/panels/Panel';
@@ -29,6 +30,9 @@ export const Main = () => {
 						</Grid>
 						<Grid item xs={12}>
 							<TransactionModal isLoading={isLoading} />
+						</Grid>
+						<Grid item xs={12}>
+							<SignIN />
 						</Grid>
 					</Grid>
 				</Box>
