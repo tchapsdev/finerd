@@ -29,24 +29,10 @@ export class HttpService<T> extends LocalStorageService<T> {
 	};
 
     public readonly getOne = (url: string): T => {
-		return http.get(url, this.getconfig());
-		// result.then(res => {
-		// 	return res.data;
-		// })
-		// .catch(err => {
-		// 	console.log(err);
-		// });
-        // return null;
+		return http.get(url, this.getconfig());		
 	};
 
     public readonly get = (url: string): T[] => {
 		return http.get<T[]>(url, this.getconfig());
-		// result.then(res => {
-		// 	return res.data;
-		// })
-		// .catch(err => {
-		// 	console.log(err);
-		// });
-        // return null;
 	}
 }
