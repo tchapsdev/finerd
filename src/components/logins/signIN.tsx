@@ -16,8 +16,12 @@ import { AccountService } from '../../service/AccountService';
 import { Account } from '../../types';
 
 interface State {
+	id: number;
+	firstName: string;
+	lastName: string;
 	email: string;
 	password: string;
+	confirmPassword: string;
 	showPassword: boolean;
 }
 
@@ -47,12 +51,24 @@ theme = responsiveFontSizes(theme);
 
 export default function signIN() {
 	const [values, setValues] = React.useState<State>({
+		confirmPassword: '',
 		email: '',
+		firstName: '',
+		id: 0,
+		lastName: '',
 		password: '',
 		showPassword: false,
 	});
 
-	const account: Account = values || { email: '', password: '' };
+	const account: Account = values || {
+		confirmPassword: '',
+		email: '',
+		firstName: '',
+		id: 0,
+		lastName: '',
+		password: '',
+		showPassword: false,
+	};
 
 	const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -75,7 +91,7 @@ export default function signIN() {
 	};
 
 	return (
-		<Grid container columns={{ xs: 8, md: 12 }} direction="column" sx={{ m: 2 }}>
+		<Grid container columns={{ md: 12, xs: 8 }} direction="column" sx={{ m: 2 }}>
 			<ThemeProvider theme={theme}>
 				<Grid item sx={{ m: 1 }} xs={2} sm={4} md={4}>
 					{' '}
@@ -152,7 +168,7 @@ export default function signIN() {
 						direction="row"
 						justifyContent="center"
 						alignItems="center"
-						sx={{ ml: 1, mb: 1 }}
+						sx={{ mb: 1, ml: 1 }}
 						xs
 					>
 						<Grid item>

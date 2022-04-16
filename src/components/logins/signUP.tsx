@@ -47,6 +47,7 @@ let theme = createTheme({
 theme = responsiveFontSizes(theme);
 
 interface State {
+	id: number;
 	firstName: string;
 	lastName: string;
 	email: string;
@@ -60,12 +61,21 @@ export default function signUP() {
 		confirmPassword: '',
 		email: '',
 		firstName: '',
+		id: 0,
 		lastName: '',
 		password: '',
 		showPassword: false,
 	});
 
-	const account: Account = values || { confirmPassword: '', email: '', firstName: '', lastName: '', password: '' };
+	const account: Account = values || {
+		confirmPassword: '',
+		email: '',
+		firstName: '',
+		id: 0,
+		lastName: '',
+		password: '',
+		showPassword: false,
+	};
 
 	const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -88,7 +98,7 @@ export default function signUP() {
 	};
 
 	return (
-		<Grid container columns={{ xs: 4, md: 12 }} direction="column" sx={{ m: 2 }}>
+		<Grid container columns={{ md: 12, xs: 4 }} direction="column" sx={{ m: 2 }}>
 			<ThemeProvider theme={theme}>
 				<Grid item sx={{ mb: 4, mt: 2 }} xs={2} sm={4} md={4}>
 					{' '}
@@ -98,7 +108,7 @@ export default function signUP() {
 				<Grid container spacing={-10} columns={16} justifyContent="flex-start">
 					<Grid item xs={8} sm={8} md={4}>
 						<TextField
-							sx={{ ml: 1, width: '95%', mb: 1 }}
+							sx={{ mb: 1, ml: 1, width: '95%' }}
 							required
 							id="firstName"
 							label="First Name"
@@ -108,7 +118,7 @@ export default function signUP() {
 					</Grid>
 					<Grid item xs={8} sm={8} md={4}>
 						<TextField
-							sx={{ width: '95%', ml: 1, mb: 1 }}
+							sx={{ mb: 1, ml: 1, width: '95%' }}
 							required
 							id="lastName"
 							label="Last Name"
@@ -183,7 +193,7 @@ export default function signUP() {
 					</Grid>
 					<Grid
 						container
-						sx={{ pr: 2, ml: 1 }}
+						sx={{ ml: 1, pr: 2 }}
 						sm={4}
 						md={4}
 						direction="row"
@@ -239,7 +249,7 @@ export default function signUP() {
 						direction="row"
 						justifyContent="flex-start"
 						alignItems="center"
-						sx={{ ml: 1, mb: 1 }}
+						sx={{ mb: 1, ml: 1 }}
 						xs
 					>
 						<Grid item>

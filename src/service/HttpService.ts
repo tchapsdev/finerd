@@ -1,37 +1,33 @@
-import axios from 'axios';
-
+import { AuthToken } from '../types';
 import { AuthorizationService } from './AuthorizationService';
 import http from './http-common';
 import { LocalStorageService } from './LocalStorageService';
 
-export class HttpService<T> extends LocalStorageService<T> {
+export class HttpService extends LocalStorageService<AuthToken> {
+	protected key = '';
 	private getconfig = (): any => {
 		const service = new AuthorizationService();
 		return {
 			headers: {
-				'Content-type': 'application/json',
 				Authorization: `Bearer ${service.getToken()}`,
+				'Content-type': 'application/json',
 			},
 		};
 	};
 
-	public readonly post = (url: string, model: T): any => {
+	public readonly post = (url: string, model: any): any => {
 		return http.post<any>(url, model, this.getconfig());
 	};
 
-	public readonly put = (url: string, model: T): any => {
+	public readonly put = (url: string, model: any): any => {
 		return http.put<any>(url, model, this.getconfig());
 	};
 
-	public readonly delete = (url: string, model: T): any => {
+	public readonly delete = (url: string): any => {
 		return http.delete<any>(url, this.getconfig());
 	};
 
-	public readonly getOne = (url: string): T => {
+	public readonly get = (url: string): any => {
 		return http.get(url, this.getconfig());
-	};
-
-	public readonly get = (url: string): T[] => {
-		return http.get<T[]>(url, this.getconfig());
 	};
 }
