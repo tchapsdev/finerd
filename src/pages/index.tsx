@@ -62,6 +62,9 @@ const connection = new signalR.HubConnectionBuilder()
 
 connection.on('ReceiveMessage', (user: string, message: string) => {
 	console.log(`${user}:  ${message}`);
+	console.log(window.navigator.onLine);
 });
 
 connection.start().catch(err => console.log(err));
+
+

@@ -2,7 +2,7 @@ import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { TransactionService } from '../../service/TransactionService';
-import { TransactionType } from '../../types';
+import { Transaction, TransactionType } from '../../types';
 import { Chart } from './chart/Chart';
 import { TransactionList } from './list/TransactionList';
 
@@ -11,7 +11,14 @@ export const Transactions = ({ type, isLoading }: { type: TransactionType; isLoa
 
 	useEffect(() => {
 		const transactionService = new TransactionService();
-		setTransactions(transactionService.findAllByType(type));
+		let trans = [];
+		let promise = new Promise((resolve, reject) => {
+			return transactionService.findAllByType(type);
+		});
+		promise.then(function (result) {
+			trans = (result as Transaction[]) || [];
+			setTransactions(trans);
+		});
 	}, [type, isLoading]);
 
 	return (

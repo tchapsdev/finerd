@@ -10,7 +10,6 @@ export class AccountService extends HttpService {
 			.then(res => {
 				this.storeObject('auth', res.data);
 				console.log('Login successful. Token received');
-				console.log(res);
 			})
 			.catch(err => {
 				console.log(err);
@@ -18,14 +17,26 @@ export class AccountService extends HttpService {
 	};
 
 	public readonly signUp = (model: Account): void => {
-		let result = this.post('/Users/signup', model);
+		let result = this.post('/Users', model);
 		result
 			.then(res => {
 				console.log('Account created. ');
-				console.log(res);
 			})
 			.catch(err => {
 				console.log(err);
 			});
+	};
+
+	public readonly Get = (): Account => {
+		let result = this.get('/Users');
+		result
+			.then(res => {
+				console.log(res);
+				return res.data;
+			})
+			.catch(err => {
+				console.log(err);
+			});
+		return null;
 	};
 }

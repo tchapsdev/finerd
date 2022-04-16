@@ -5,7 +5,8 @@ import { LocalStorageService } from './LocalStorageService';
 
 export class HttpService extends LocalStorageService<AuthToken> {
 	protected key = '';
-	private getconfig = (): any => {
+	public httpCommon = http;
+	protected getconfig = (): any => {
 		const service = new AuthorizationService();
 		return {
 			headers: {
