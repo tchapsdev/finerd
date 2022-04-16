@@ -48,6 +48,7 @@ export const Main = () => {
 
 export default Main;
 
+// Push notification config
 const connection = new signalR.HubConnectionBuilder()
 	.withUrl('https://finerd-api.tchapssolution.com/finerdHub', {
 		accessTokenFactory: () => window.access_token,
