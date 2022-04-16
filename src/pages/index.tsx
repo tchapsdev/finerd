@@ -9,6 +9,7 @@ import { Panel } from '../components/panels/Panel';
 import { TransactionModal } from '../components/transactions/modal/TransactionModal';
 import { Transactions } from '../components/transactions/Transactions';
 import { ContextProvider, contextReducer, initialState } from '../context/Context';
+import { AuthorizationService } from '../service/AuthorizationService';
 
 export const Main = () => {
 	const [state, dispatch] = useReducer<any>(contextReducer, initialState);
@@ -16,6 +17,9 @@ export const Main = () => {
 
 	const currentPanel: number = (state as any).currentPanel;
 	const supportedTransactions = (state as any).supportedTransactions;
+	// Set token globally for app
+	const authService = new AuthorizationService();
+	authService.getToken();
 
 	return (
 		<ContextProvider value={{ dispatch, state }}>
@@ -48,7 +52,7 @@ export const Main = () => {
 
 export default Main;
 
-// Push notification config
+// Push notification
 const connection = new signalR.HubConnectionBuilder()
 	.withUrl('https://finerd-api.tchapssolution.com/finerdHub', {
 		accessTokenFactory: () => window.access_token,
@@ -56,16 +60,8 @@ const connection = new signalR.HubConnectionBuilder()
 	})
 	.build();
 
-connection.on('messageReceived', (username: string, message: string) => {
-	console.log(`messageReceived: username: ${username}, message: ${message}`);
-});
-
-connection.on('publicMessage', (username: string, message: string) => {
-	console.log(`publicMessage, username: ${username}, message: ${message}`);
-});
-
-connection.on('privateMessage', (username: string, message: string) => {
-	console.log(`privateMessage, username: ${username}, message: ${message}`);
+connection.on('ReceiveMessage', (user: string, message: string) => {
+	console.log(`${user}:  ${message}`);
 });
 
 connection.start().catch(err => console.log(err));
