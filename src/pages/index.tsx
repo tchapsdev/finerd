@@ -1,9 +1,8 @@
-import * as signalR from '@microsoft/signalr';
 import { Box, Container, Grid } from '@mui/material';
 import React, { useReducer } from 'react';
 
-import SignIN from '../components/logins/signIN';
-import SignUP from '../components/logins/signUP';
+import { SignInModal } from '../components/account/modal/SignInModal';
+import { SignUpModal } from '../components/account/modal/SignUpModal';
 import { Navbar } from '../components/navbar/Navbar';
 import { Panel } from '../components/panels/Panel';
 import { TransactionModal } from '../components/transactions/modal/TransactionModal';
@@ -34,10 +33,10 @@ export const Main = () => {
 							<TransactionModal isLoading={isLoading} />
 						</Grid>
 						<Grid item xs={12}>
-							<SignIN />
+							<SignInModal />
 						</Grid>
 						<Grid item xs={12}>
-							<SignUP />
+							<SignUpModal />
 						</Grid>
 					</Grid>
 				</Box>
@@ -47,24 +46,3 @@ export const Main = () => {
 };
 
 export default Main;
-
-const connection = new signalR.HubConnectionBuilder()
-	.withUrl('https://finerd-api.tchapssolution.com/finerdHub', {
-		accessTokenFactory: () => window.access_token,
-		withCredentials: false,
-	})
-	.build();
-
-connection.on('messageReceived', (username: string, message: string) => {
-	console.log(`messageReceived: username: ${username}, message: ${message}`);
-});
-
-connection.on('publicMessage', (username: string, message: string) => {
-	console.log(`publicMessage, username: ${username}, message: ${message}`);
-});
-
-connection.on('privateMessage', (username: string, message: string) => {
-	console.log(`privateMessage, username: ${username}, message: ${message}`);
-});
-
-connection.start().catch(err => console.log(err));

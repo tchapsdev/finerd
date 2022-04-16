@@ -1,7 +1,20 @@
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { AppBar, Box, Container, Grid, IconButton, Tab, tabClasses, Tabs, tabsClasses, Toolbar } from '@mui/material';
+import {
+	AppBar,
+	Box,
+	Container,
+	Grid,
+	IconButton,
+	Menu,
+	MenuItem,
+	Tab,
+	tabClasses,
+	Tabs,
+	tabsClasses,
+	Toolbar,
+} from '@mui/material';
 import { styled } from '@mui/system';
-import { SyntheticEvent, useContext } from 'react';
+import React, { MouseEvent, SyntheticEvent, useContext, useEffect, useState } from 'react';
 
 import variables from '../../../styles/variables.module.scss';
 import { actions, Context } from '../../context/Context';
@@ -32,9 +45,15 @@ const indexToProps = (index: number) => ({
 	key: `navbar-tab-${index}`,
 });
 
+enum menuActions {
+	signIn = 'Sign In',
+	signUp = 'Sign Up',
+	signOut = 'Sign Out',
+}
+
 export const Navbar = () => {
 	const {
-		state: { currentPanel: current, supportedTransactions: tabs },
+		state: { currentPanel: current, supportedTransactions: tabs, isSignedIn },
 		dispatch,
 	} = useContext(Context);
 
@@ -42,13 +61,47 @@ export const Navbar = () => {
 		dispatch({ data: tabIndex, type: actions.SET_CURRENT_PANEL });
 	};
 
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const isMenuOpen = Boolean(anchorEl);
+
+	const handleMenuButtonClick = (event: MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleCloseMenu = () => {
+		setAnchorEl(null);
+	};
+
+	const handleMenuItemClick = (option: string) => {
+		switch (option) {
+			case menuActions.signIn:
+				dispatch({ data: true, type: actions.SET_IS_SIGN_IN_MODAL_OPENED });
+				break;
+			case menuActions.signUp:
+				dispatch({ data: true, type: actions.SET_IS_SIGN_UP_MODAL_OPENED });
+				break;
+			case menuActions.signOut:
+				// todo: sign out user and clear local storage
+				dispatch({ data: false, type: actions.SET_IS_SIGNED_IN });
+				break;
+		}
+
+		handleCloseMenu();
+	};
+
+	const [options, setOptions] = useState<string[]>([]);
+
+	useEffect(() => {
+		setOptions(isSignedIn ? [menuActions.signOut] : [menuActions.signIn, menuActions.signUp]);
+	}, [isSignedIn]);
+
 	return (
 		<Box sx={{ flexGrow: 1, mb: 10, p: 0 }}>
 			<AppBar position="fixed" color="inherit" elevation={0} sx={{ boxShadow: 'none', m: 0, p: 0, pt: 2 }}>
-				<Container maxWidth={false}>
+				<Container maxWidth={false} sx={{ p: 0 }}>
 					<Toolbar disableGutters={true} variant="dense">
 						<Grid container alignItems="center" justifyContent="space-between">
-							<Grid item xs={12}>
+							<Grid item xs={12} sx={{ ml: 2 }}>
 								<TabContainer
 									className="tabs tabs-boxed"
 									value={current}
@@ -58,10 +111,40 @@ export const Navbar = () => {
 									{tabs.map((tab, index) => (
 										<TabItem className="tab" label={tab} {...indexToProps(index)} />
 									))}
-									<IconButton edge="end" color="inherit">
+									<IconButton
+										aria-controls={isMenuOpen ? 'account-menu' : undefined}
+										aria-expanded={isMenuOpen ? 'true' : undefined}
+										aria-haspopup="true"
+										aria-label="more"
+										color="inherit"
+										edge="start"
+										id="account-button"
+										onClick={handleMenuButtonClick}
+										sx={{ pl: 0, pr: 0, zIndex: 1000 }}
+									>
 										<MoreIcon />
-										{/* todo: add handler to open menu with sign up or log out options */}
 									</IconButton>
+									<Menu
+										id="account-menu"
+										MenuListProps={{
+											'aria-labelledby': 'account-button',
+										}}
+										anchorEl={anchorEl}
+										open={isMenuOpen}
+										onClose={handleCloseMenu}
+										PaperProps={{
+											elevation: 3,
+											style: {
+												width: '15ch',
+											},
+										}}
+									>
+										{options.map(option => (
+											<MenuItem key={option} onClick={() => handleMenuItemClick(option)}>
+												{option}
+											</MenuItem>
+										))}
+									</Menu>
 								</TabContainer>
 							</Grid>
 						</Grid>

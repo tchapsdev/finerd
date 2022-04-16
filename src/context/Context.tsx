@@ -7,6 +7,9 @@ export const actions = {
 	SET_CURRENT_PANEL: 'set-current-panel',
 	SET_CURRENT_TRANSACTION: 'set-current-transaction',
 	SET_IS_LOADING: 'set-is-loading',
+	SET_IS_SIGNED_IN: 'set-is-signed-in',
+	SET_IS_SIGN_IN_MODAL_OPENED: 'set-is-sign-in-modal-opened',
+	SET_IS_SIGN_UP_MODAL_OPENED: 'set-is-sign-up-modal-opened',
 	SET_IS_TRANSACTION_MODAL_OPENED: 'set-is-transaction-modal-opened',
 } as const;
 
@@ -22,6 +25,9 @@ declare type ContextStore = {
 	currentTransaction?: Transaction;
 	currentPanel?: number;
 	isLoading?: boolean;
+	isSignedIn?: boolean;
+	isSignInModalOpened?: boolean;
+	isSignUpModalOpened?: boolean;
 	isTransactionModalOpened?: boolean;
 	supportedTransactions: Readonly<Transaction['type'][]>;
 };
@@ -31,6 +37,9 @@ export const Context = createContext<any>({});
 export const initialState: ContextStore = {
 	currentPanel: 0,
 	isLoading: false,
+	isSignInModalOpened: false,
+	isSignUpModalOpened: false,
+	isSignedIn: false,
 	isTransactionModalOpened: false,
 	supportedTransactions,
 };
@@ -43,6 +52,12 @@ export const contextReducer = (state: ContextStore, action: Action) => {
 			return { ...state, currentPanel: action.data };
 		case actions.SET_IS_LOADING:
 			return { ...state, isLoading: !!action.data };
+		case actions.SET_IS_SIGNED_IN:
+			return { ...state, isSignedIn: !!action.data };
+		case actions.SET_IS_SIGN_IN_MODAL_OPENED:
+			return { ...state, isSignInModalOpened: !!action.data };
+		case actions.SET_IS_SIGN_UP_MODAL_OPENED:
+			return { ...state, isSignUpModalOpened: !!action.data };
 		case actions.SET_IS_TRANSACTION_MODAL_OPENED:
 			return { ...state, isTransactionModalOpened: !!action.data };
 		default:
