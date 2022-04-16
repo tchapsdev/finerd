@@ -1,12 +1,11 @@
 import { createContext } from 'react';
 
 import { supportedTransactions } from '../constants';
-import { Transaction, User } from '../types';
+import { Transaction } from '../types';
 
 export const actions = {
 	SET_CURRENT_PANEL: 'set-current-panel',
 	SET_CURRENT_TRANSACTION: 'set-current-transaction',
-	SET_CURRENT_USER: 'set-current-user',
 	SET_IS_LOADING: 'set-is-loading',
 	SET_IS_TRANSACTION_MODAL_OPENED: 'set-is-transaction-modal-opened',
 } as const;
@@ -21,7 +20,6 @@ declare type Action = {
 
 declare type ContextStore = {
 	currentTransaction?: Transaction;
-	currentUser?: User;
 	currentPanel?: number;
 	isLoading?: boolean;
 	isTransactionModalOpened?: boolean;
@@ -41,8 +39,6 @@ export const contextReducer = (state: ContextStore, action: Action) => {
 	switch (action.type) {
 		case actions.SET_CURRENT_TRANSACTION:
 			return { ...state, currentTransaction: action.data };
-		case actions.SET_CURRENT_USER:
-			return { ...state, currentUser: action.data };
 		case actions.SET_CURRENT_PANEL:
 			return { ...state, currentPanel: action.data };
 		case actions.SET_IS_LOADING:
@@ -59,10 +55,4 @@ export const setCurrentTransaction = (data: Transaction) => ({
 	type: actions.SET_CURRENT_TRANSACTION,
 });
 
-export const setCurrentUser = (data: User) => ({
-	data,
-	type: actions.SET_CURRENT_USER,
-});
-
 export const ContextProvider = Context.Provider;
-export const ContextConsumer = Context.Consumer;

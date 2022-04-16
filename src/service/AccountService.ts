@@ -1,31 +1,29 @@
 import { Account } from '../types';
-import { HttpService } from './httpService';
+import { TokenManager } from './Auth/TokenManager';
+import { createHttpClient, HttpClient } from './Http/Client';
+import { ModelRepository } from './Repository/ModelRepository';
 
-export class AccountService extends HttpService<Account> {
+export class AccountService<T extends Account = Account> {
 	protected key = 'user';
+	protected client: HttpClient;
 
-	public readonly login = (model: Account): void => {
-		let result = this.post('/Users/login', model);
-		result
-			.then(res => {
-				this.storeObject('auth', res.data);
-				console.log('Login successful. Token received');
-				console.log(res);
-			})
-			.catch(err => {
-				console.log(err);
-			});
+	protected repository: ModelRepository<T>;
+	protected tokenManager: TokenManager;
+
+	constructor() {
+		this.repository = new ModelRepository<T>(this.key);
+		this.tokenManager = new TokenManager();
+		this.client = createHttpClient(this.tokenManager);
+	}
+
+	public readonly signIn = (model: T): void => {
+		this.client.post('/Users/login', model).then(res => {
+			this.tokenManager.setToken(res.data);
+			console.log('login successful', 'token received');
+		});
 	};
 
-	public readonly signUp = (model: Account): void => {
-		let result = this.post('/Users/signup', model);
-		result
-			.then(res => {
-				console.log('Account created. ');
-				console.log(res);
-			})
-			.catch(err => {
-				console.log(err);
-			});
+	public readonly signUp = (model: T): void => {
+		this.client.post('/Users/signup', model).then(res => console.log('account created', res));
 	};
 }

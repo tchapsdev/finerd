@@ -24,6 +24,27 @@ declare type Transaction = {
 	type: TransactionType;
 };
 
-declare type User = {
-	transactions: Transaction[];
+declare type Account = {
+	id: number;
+	firstName: string;
+	lastName: string;
+	email: string;
+	password: string;
+	confirmPassword: string;
+	showPassword: boolean;
 };
+
+declare type AuthToken = {
+	accessToken: string;
+	refreshToken: string;
+	createdAt: Date;
+	updatedAt?: Date;
+	deletedAt?: Date;
+	id: number;
+};
+
+declare global {
+	interface Window {
+		access_token: any;
+	}
+}
