@@ -22,16 +22,17 @@ import {
 import { ChangeEvent, useContext, useRef, useState } from 'react';
 
 import variables from '../../../../styles/variables.module.scss';
-import { Transaction } from '../../../../types/@finerd';
-import { supportedCategories, supportedPaymentMethods } from '../../../constants';
+import { supportedCategories } from '../../../constants';
 import { actions, Context } from '../../../context/Context';
 import { TransactionService } from '../../../service/TransactionService';
+import { Transaction, TransactionType } from '../../../types';
 import { WheelPicker } from '../picker/WheelPicker';
 
 const CameraButton = styled(Button)(`
     border: 1px solid rgba(0, 0, 0, 0.23);
     broder-radius: 4;
     color: ${variables.secondary};
+    text-transform: none;
     
     .Mui-focused, :focus, :hover {
         border: 1px solid rgba(0, 0, 0, 0.23);
@@ -85,8 +86,8 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 		dispatch({ data: undefined, type: actions.SET_CURRENT_TRANSACTION });
 	};
 
-	const transactionType = supportedTransactions[currentPanel];
-	const transaction: Transaction = currentTransaction || { id: 0, type: transactionType };
+	const transactionType: TransactionType = supportedTransactions[currentPanel];
+	const transaction: Transaction = currentTransaction || { amount: 0, id: 0, type: transactionType };
 
 	const transactionService = new TransactionService();
 	const imageInputRef = useRef<HTMLInputElement>(null);
@@ -110,6 +111,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 
 	const handleSubmit = event => {
 		event.preventDefault();
+		// todo: validate fields
 		transactionService.save(transaction);
 		closeModal();
 	};
@@ -133,14 +135,14 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 
 	return (
 		<Container component="main" maxWidth="md" sx={{ height: '100%' }}>
-			<Grid container alignItems="center" sx={{ pb: 2, pt: 1 }}>
+			<Grid container alignItems="center" sx={{ pb: 1, pt: 1 }}>
 				<Box sx={{ display: 'flex', flexDirection: 'column', width: '5%' }}>
 					<IconButton edge="start" onClick={closeModal}>
-						<ArrowBackIosSharpIcon />
+						<ArrowBackIosSharpIcon fontSize="small" />
 					</IconButton>
 				</Box>
 				<Box sx={{ display: 'flex', flexDirection: 'column', width: '95%' }}>
-					<Typography variant="h6" align="center">
+					<Typography variant="subtitle1" align="center">
 						{transactionType.toUpperCase()}
 					</Typography>
 				</Box>
@@ -154,15 +156,13 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 				}}
 			>
 				<Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off">
-					<Typography variant="subtitle1" sx={{ pb: 1 }}>
-						CATEGORY
-					</Typography>
+					<Typography variant="subtitle1">category</Typography>
 					<WheelPicker
 						data={supportedCategories[transactionType]}
 						type={'category'}
 						transaction={transaction}
 						onChange={value => {
-							transaction.category = value;
+							transaction.category = value as Transaction['category'];
 						}}
 					/>
 					<Input
@@ -171,9 +171,9 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						required
 						fullWidth
 						id="amount"
-						label="AMOUNT"
+						label="amount"
 						name="amount"
-						value={transaction?.amount}
+						defaultValue={transaction.amount !== 0 ? transaction.amount : ''}
 						autoComplete="off"
 						sx={{ mt: 3 }}
 						onChange={event => {
@@ -186,25 +186,14 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						multiline
 						rows={2}
 						name="description"
-						label="DESCRIPTION"
+						label="description"
 						type="text"
 						id="description"
-						value={transaction?.description}
+						defaultValue={transaction?.description}
 						autoComplete="off"
 						sx={{ mb: 2 }}
 						onChange={event => {
 							transaction.description = event.target.value;
-						}}
-					/>
-					<Typography variant="subtitle1" sx={{ pb: 1 }}>
-						PAYMENT METHOD
-					</Typography>
-					<WheelPicker
-						data={supportedPaymentMethods}
-						type={'paymentMethod'}
-						transaction={transaction}
-						onChange={value => {
-							transaction.paymentMethod = value;
 						}}
 					/>
 					<input
@@ -232,13 +221,13 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						startIcon={<CameraAltIcon />}
 						onClick={handleCameraButtonClick}
 					>
-						PHOTO
+						<Typography variant="subtitle1">photo</Typography>
 					</CameraButton>
 					<AppBar
 						position="fixed"
 						color="inherit"
 						elevation={0}
-						sx={{ bottom: 10, boxShadow: 'none', top: 'auto' }}
+						sx={{ bottom: 0, boxShadow: 'none', left: 0, m: 'auto', maxWidth: '494px', p: 0, top: 'auto' }}
 					>
 						<Toolbar sx={{ justifyContent: 'center' }}>
 							<Actions size="large" fullWidth>
@@ -263,14 +252,16 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 			>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description" color="black">
-						Do you really want to delete that transaction?
+						Do you really want to delete this transaction?
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleCloseDeleteConfirmationDialog} autoFocus>
+					<Button onClick={handleCloseDeleteConfirmationDialog} autoFocus sx={{ color: variables.secondary }}>
 						Cancel
 					</Button>
-					<Button onClick={handleDeleteTransaction}>Delete</Button>
+					<Button onClick={handleDeleteTransaction} sx={{ color: variables.danger }}>
+						Delete
+					</Button>
 				</DialogActions>
 			</Dialog>
 		</Container>

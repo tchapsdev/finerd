@@ -1,8 +1,8 @@
 import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-import { TransactionType } from '../../../types/@finerd';
 import { TransactionService } from '../../service/TransactionService';
+import { TransactionType } from '../../types';
 import { Chart } from './chart/Chart';
 import { TransactionList } from './list/TransactionList';
 
@@ -16,10 +16,10 @@ export const Transactions = ({ type, isLoading }: { type: TransactionType; isLoa
 
 	return (
 		<Grid container alignItems="flex-start" justifyContent="space-between" sx={{ rowGap: 3 }}>
-			<Grid item xs={12} sm={12} md={4} sx={{ px: 2 }}>
+			<Grid item xs={12} sm={12} md={12}>
 				<Chart transactions={transactions} type={type} />
 			</Grid>
-			<Grid item xs={12} sm={12} md={8}>
+			<Grid item xs={12} sm={12} md={12}>
 				<TransactionList transactions={transactions} />
 			</Grid>
 		</Grid>
