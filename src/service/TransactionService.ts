@@ -31,4 +31,6 @@ export class TransactionService<T extends Transaction> {
 
 	public readonly getBalanceByType = (type: T['type']): number =>
 		this.findAllByType(type).reduce((acc, transaction) => acc + transaction.amount, 0);
+
+	public readonly deleteById = (id: number): void => this.repository.deleteById(id);
 }
