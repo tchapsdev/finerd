@@ -1,7 +1,7 @@
 import { Account } from '../types';
-import { HttpService } from './httpService';
+import { HttpService } from './HttpService';
 
-export class AccountService extends HttpService<Account> {
+export class AccountService extends HttpService {
 	protected key = 'user';
 
 	public readonly login = (model: Account): void => {

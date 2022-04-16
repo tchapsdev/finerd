@@ -1,5 +1,5 @@
 // https://www.bezkoder.com/react-typescript-api-call/
-import AuthToken from '../types';
+import { AuthToken } from '../types';
 import { LocalStorageService } from './LocalStorageService';
 
 export class AuthorizationService extends LocalStorageService<AuthToken> {
