@@ -23,7 +23,6 @@ export class TransactionService<T extends Transaction> {
 		result
 			.then(res => {
 				console.log('Transactions added successful.');
-				console.log(res);
 				return this.repository.createOrUpdate(res.data);
 			})
 			.catch(err => {
@@ -52,7 +51,6 @@ export class TransactionService<T extends Transaction> {
 				.then(res => {
 					console.log(res.data);
 					const r = res.data as Transaction[];
-					console.log(r);
 					return r;
 				})
 				.catch(err => {
