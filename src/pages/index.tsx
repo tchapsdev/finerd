@@ -1,3 +1,4 @@
+import * as signalR from '@microsoft/signalr';
 import { Box, Container, Grid } from '@mui/material';
 import React, { useReducer } from 'react';
 
@@ -8,7 +9,6 @@ import { Panel } from '../components/panels/Panel';
 import { TransactionModal } from '../components/transactions/modal/TransactionModal';
 import { Transactions } from '../components/transactions/Transactions';
 import { ContextProvider, contextReducer, initialState } from '../context/Context';
-import { AuthorizationService } from '../service/AuthorizationService';
 
 export const Main = () => {
 	const [state, dispatch] = useReducer<any>(contextReducer, initialState);
@@ -17,8 +17,8 @@ export const Main = () => {
 	const currentPanel: number = (state as any).currentPanel;
 	const supportedTransactions = (state as any).supportedTransactions;
 	// Set token globally for app
-	const authService = new AuthorizationService();
-	authService.getToken();
+	// const authService = new AuthorizationService();
+	// authService.getToken();
 
 	return (
 		<ContextProvider value={{ dispatch, state }}>
@@ -65,5 +65,3 @@ connection.on('ReceiveMessage', (user: string, message: string) => {
 });
 
 connection.start().catch(err => console.log(err));
-
-
