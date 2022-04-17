@@ -111,16 +111,15 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 
 	const handleSubmit = event => {
 		event.preventDefault();
-		// todo: validate fields
-		transactionService.save(transaction);
-		closeModal();
+		transactionService.save(transaction).then(() => closeModal());
 	};
 
 	const handleDeleteTransaction = event => {
 		event.preventDefault();
-		transactionService.deleteById(transaction.id);
-		setOpenDeleteConfirmationDialog(false);
-		closeModal();
+		transactionService.deleteById(transaction.id).then(() => {
+			setOpenDeleteConfirmationDialog(false);
+			closeModal();
+		});
 	};
 
 	const [openDeleteConfirmationDialog, setOpenDeleteConfirmationDialog] = useState(false);

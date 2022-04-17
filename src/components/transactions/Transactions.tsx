@@ -10,8 +10,7 @@ export const Transactions = ({ type, isLoading }: { type: TransactionType; isLoa
 	const [transactions, setTransactions] = useState([]);
 
 	useEffect(() => {
-		const transactionService = new TransactionService();
-		setTransactions(transactionService.findAllByType(type));
+		new TransactionService().findAllByType(type).then(setTransactions);
 	}, [type, isLoading]);
 
 	return (
