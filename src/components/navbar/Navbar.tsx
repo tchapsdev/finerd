@@ -1,5 +1,6 @@
 import MoreIcon from '@mui/icons-material/MoreVert';
 import {
+	Alert,
 	AppBar,
 	Box,
 	Container,
@@ -7,6 +8,7 @@ import {
 	IconButton,
 	Menu,
 	MenuItem,
+	Snackbar,
 	Tab,
 	tabClasses,
 	Tabs,
@@ -18,6 +20,7 @@ import React, { MouseEvent, SyntheticEvent, useContext, useEffect, useState } fr
 
 import variables from '../../../styles/variables.module.scss';
 import { actions, Context } from '../../context/Context';
+import { AccountService } from '../../service/AccountService';
 
 const TabItem = styled(Tab)(`
     margin: auto;
@@ -72,6 +75,17 @@ export const Navbar = () => {
 		setAnchorEl(null);
 	};
 
+	const [isNotificationOpened, setIsNotificationOpened] = useState(false);
+	const [isSingOutSuccess, setIsSingOutSuccess] = useState(false);
+
+	const handleNotificationClose = (event?: SyntheticEvent | Event, reason?: string) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setIsNotificationOpened(false);
+	};
+
 	const handleMenuItemClick = (option: string) => {
 		switch (option) {
 			case menuActions.signIn:
@@ -81,8 +95,17 @@ export const Navbar = () => {
 				dispatch({ data: true, type: actions.SET_IS_SIGN_UP_MODAL_OPENED });
 				break;
 			case menuActions.signOut:
-				// todo: sign out user and clear local storage
-				dispatch({ data: false, type: actions.SET_IS_SIGNED_IN });
+				new AccountService()
+					.signOut()
+					.then(() => {
+						setIsNotificationOpened(true);
+						setIsSingOutSuccess(true);
+						dispatch({ data: false, type: actions.SET_IS_SIGNED_IN });
+					})
+					.catch(() => {
+						setIsSingOutSuccess(false);
+						setIsNotificationOpened(true);
+					});
 				break;
 		}
 
@@ -151,6 +174,15 @@ export const Navbar = () => {
 					</Toolbar>
 				</Container>
 			</AppBar>
+			<Snackbar open={isNotificationOpened} autoHideDuration={6000} onClose={handleNotificationClose}>
+				<Alert
+					onClose={handleNotificationClose}
+					severity={isSingOutSuccess ? 'success' : 'warning'}
+					sx={{ width: '100%' }}
+				>
+					{isSingOutSuccess ? 'You have successfully signed out.' : 'Something went wrong, please retry.'}
+				</Alert>
+			</Snackbar>
 		</Box>
 	);
 };
