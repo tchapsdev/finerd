@@ -53,7 +53,7 @@ export const contextReducer = (state: ContextStore, action: Action) => {
 		case actions.SET_IS_LOADING:
 			return { ...state, isLoading: !!action.data };
 		case actions.SET_IS_SIGNED_IN:
-			return { ...state, isSignedIn: !!action.data };
+			return { ...state, isLoading: !state.isLoading, isSignedIn: !!action.data };
 		case actions.SET_IS_SIGN_IN_MODAL_OPENED:
 			return { ...state, isSignInModalOpened: !!action.data };
 		case actions.SET_IS_SIGN_UP_MODAL_OPENED:
