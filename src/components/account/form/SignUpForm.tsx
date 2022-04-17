@@ -12,8 +12,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 
-import { AccountService } from '../../service/AccountService';
-import { Account } from '../../types';
+import { AccountService } from '../../../service/AccountService';
+import { Account } from '../../../types';
 
 let theme = createTheme({
 	typography: {
@@ -56,7 +56,7 @@ interface State {
 	showPassword: boolean;
 }
 
-export default function signUP() {
+export const SignUpForm = () => {
 	const [values, setValues] = React.useState<State>({
 		confirmPassword: '',
 		email: '',
@@ -265,4 +265,4 @@ export default function signUP() {
 			</ThemeProvider>
 		</Grid>
 	);
-}
+};

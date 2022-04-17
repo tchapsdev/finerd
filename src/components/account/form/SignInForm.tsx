@@ -12,8 +12,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
 
-import { AccountService } from '../../service/AccountService';
-import { Account } from '../../types';
+import { AccountService } from '../../../service/AccountService';
+import { Account } from '../../../types';
 
 interface State {
 	id: number;
@@ -49,7 +49,7 @@ let theme = createTheme({
 
 theme = responsiveFontSizes(theme);
 
-export default function signIN() {
+export const SignInForm = () => {
 	const [values, setValues] = React.useState<State>({
 		confirmPassword: '',
 		email: '',
@@ -87,7 +87,7 @@ export default function signIN() {
 
 	const handleSignIn = () => {
 		let service = new AccountService();
-		service.login(account);
+		service.signIn(account);
 	};
 
 	return (
@@ -186,4 +186,4 @@ export default function signIN() {
 			</ThemeProvider>
 		</Grid>
 	);
-}
+};
