@@ -24,10 +24,6 @@ declare type Transaction = {
 	type: TransactionType;
 };
 
-declare type User = {
-	transactions: Transaction[];
-};
-
 declare type Account = {
 	id: number;
 	firstName: string;
@@ -47,15 +43,8 @@ declare type AuthToken = {
 	id: number;
 };
 
-// Global variable
 declare global {
 	interface Window {
 		access_token: any;
 	}
-}
-
-interface EntityBase {
-	id: number;
-	createdAt: Date;
-	updatedAt?: Date;
 }

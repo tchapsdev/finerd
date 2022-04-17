@@ -1,13 +1,18 @@
 import { Transaction } from '../types';
-import { LocalStorageService } from './LocalStorageService';
+import { ModelRepository } from './Repository/ModelRepository';
 
-export class TransactionService extends LocalStorageService<Transaction> {
+export class TransactionService<T extends Transaction> {
 	protected key = 'transactions';
+	protected repository: ModelRepository<T>;
 
-	public readonly save = (model: Transaction): Transaction => this.createOrUpdate(model);
+	constructor() {
+		this.repository = new ModelRepository<T>(this.key);
+	}
 
-	public readonly findAllByType = (type: Transaction['type']): Transaction[] => {
-		const transactions = this.findAll().filter(transaction => transaction.type === type);
+	public readonly save = (model: T): T => this.repository.createOrUpdate(model);
+
+	public readonly findAllByType = (type: T['type']): T[] => {
+		const transactions = this.repository.findAll().filter(transaction => transaction.type === type);
 
 		transactions.forEach(transaction => {
 			if (transaction.updatedAt) {
@@ -24,6 +29,8 @@ export class TransactionService extends LocalStorageService<Transaction> {
 		return transactions;
 	};
 
-	public readonly getBalanceByType = (type: Transaction['type']): number =>
+	public readonly getBalanceByType = (type: T['type']): number =>
 		this.findAllByType(type).reduce((acc, transaction) => acc + transaction.amount, 0);
+
+	public readonly deleteById = (id: number): void => this.repository.deleteById(id);
 }
