@@ -87,10 +87,20 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 	};
 
 	const transactionType: TransactionType = supportedTransactions[currentPanel];
-	const transaction: Transaction = currentTransaction || { amount: 0, id: 0, type: transactionType };
+	const [transaction, setTransaction] = useState<Transaction>(
+		currentTransaction || {
+			amount: 0,
+			id: 0,
+			type: transactionType,
+		}
+	);
 
 	const transactionService = new TransactionService();
 	const imageInputRef = useRef<HTMLInputElement>(null);
+
+	const handleChange = (key: keyof Transaction, value: any) => {
+		setTransaction({ ...transaction, [key]: value });
+	};
 
 	const handleCameraButtonClick = () => {
 		if (imageInputRef.current) {
@@ -104,7 +114,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 			const reader = new FileReader();
 			reader.readAsDataURL(file);
 			reader.onload = () => {
-				transaction.photo = reader.result as string;
+				setTransaction({ ...transaction, photo: reader.result as string });
 			};
 		}
 	};
@@ -160,9 +170,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						data={supportedCategories[transactionType]}
 						type={'category'}
 						transaction={transaction}
-						onChange={value => {
-							transaction.category = value as Transaction['category'];
-						}}
+						onChange={value => handleChange('category', value)}
 					/>
 					<Input
 						inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
@@ -174,10 +182,8 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						name="amount"
 						defaultValue={transaction.amount !== 0 ? transaction.amount : ''}
 						autoComplete="off"
-						sx={{ mt: 3 }}
-						onChange={event => {
-							transaction.amount = +event.target.value;
-						}}
+						sx={{ mb: 0, mt: 2 }}
+						onChange={event => handleChange('amount', +event.target.value)}
 					/>
 					<Input
 						margin="normal"
@@ -190,10 +196,8 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						id="description"
 						defaultValue={transaction?.description}
 						autoComplete="off"
-						sx={{ mb: 2 }}
-						onChange={event => {
-							transaction.description = event.target.value;
-						}}
+						sx={{ mb: 2, mt: 2 }}
+						onChange={event => handleChange('description', event.target.value)}
 					/>
 					<input
 						type="file"
@@ -203,14 +207,14 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						onChange={handleImageChange}
 					/>
 					{transaction?.photo && (
-						<Card variant="outlined" sx={{ maxHeight: '150px', mb: 3 }}>
+						<Card variant="outlined" sx={{ maxHeight: '150px', mb: 0, mt: -4 }}>
 							<CardMedia
 								component="img"
 								height="auto"
 								width="100%"
 								image={transaction.photo}
 								alt="invoice"
-								sx={{ objectFit: 'cover' }}
+								sx={{ mb: 0, mt: 0, objectFit: 'cover' }}
 							/>
 						</Card>
 					)}
@@ -219,6 +223,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						variant="outlined"
 						startIcon={<CameraAltIcon />}
 						onClick={handleCameraButtonClick}
+						sx={transaction?.photo ? { mb: 0, mt: 1 } : { mb: 0, mt: -4 }}
 					>
 						<Typography variant="subtitle1">photo</Typography>
 					</CameraButton>
@@ -228,7 +233,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						elevation={0}
 						sx={{ bottom: 0, boxShadow: 'none', left: 0, m: 'auto', maxWidth: '494px', p: 0, top: 'auto' }}
 					>
-						<Toolbar sx={{ justifyContent: 'center' }}>
+						<Toolbar sx={{ justifyContent: 'center', mb: 1 }}>
 							<Actions size="large" fullWidth>
 								{transaction.id !== 0 && (
 									<Button className="danger" onClick={handleOpenDeleteConfirmationDialog}>

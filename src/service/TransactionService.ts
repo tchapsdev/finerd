@@ -53,7 +53,9 @@ export class TransactionService<T extends Transaction> {
 	};
 
 	private readonly findAllByTypeLocally = (type: T['type']): T[] => {
-		const transactions = this.repository.findAll().filter(transaction => transaction.type === type);
+		const transactions = this.repository
+			.findAll()
+			.filter(transaction => transaction.type.toLowerCase() === type.toLowerCase());
 		return this.formatDates(transactions);
 	};
 
