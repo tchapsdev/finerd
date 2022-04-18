@@ -40,5 +40,6 @@ declare type AuthToken = {
 declare global {
 	interface Window {
 		access_token: any;
+		workbox: any;
 	}
 }
