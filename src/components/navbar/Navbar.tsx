@@ -21,6 +21,7 @@ import React, { MouseEvent, SyntheticEvent, useContext, useEffect, useState } fr
 import variables from '../../../styles/variables.module.scss';
 import { actions, Context } from '../../context/Context';
 import { AccountService } from '../../service/AccountService';
+import { TokenManager } from '../../service/Auth/TokenManager';
 
 const TabItem = styled(Tab)(`
     margin: auto;
@@ -59,6 +60,10 @@ export const Navbar = () => {
 		state: { currentPanel: current, supportedTransactions: tabs, isSignedIn },
 		dispatch,
 	} = useContext(Context);
+
+	useEffect(() => {
+		dispatch({ data: new TokenManager().hasToken(), type: actions.SET_IS_SIGNED_IN });
+	}, [isSignedIn]);
 
 	const handleChange = (event: SyntheticEvent, tabIndex: number) => {
 		dispatch({ data: tabIndex, type: actions.SET_CURRENT_PANEL });

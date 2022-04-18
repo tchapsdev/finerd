@@ -5,64 +5,108 @@ import { ModelRepository } from './Repository/ModelRepository';
 
 export class TransactionService<T extends Transaction> {
 	protected key = 'transactions';
+
+	protected isSignedIn: boolean;
+	protected isOnline: boolean;
+
+	protected client: HttpClient;
 	protected repository: ModelRepository<T>;
 	protected client: HttpClient;
 	protected tokenManager: TokenManager;
 	protected isAppOnline = window.navigator.onLine;
 
 	constructor() {
+		const tokenManager = new TokenManager();
+
+		this.isSignedIn = tokenManager.hasToken();
+		this.isOnline = navigator.onLine;
+
+		this.client = createHttpClient(tokenManager);
 		this.repository = new ModelRepository<T>(this.key);
 		this.tokenManager = new TokenManager();
 		this.client = createHttpClient(this.tokenManager);
 	}
 
-	public readonly save = (model: Transaction): Transaction => {
-		//if (!this.isAppOnline) return this.repository.createOrUpdate(model);
+	public readonly save = async (model: T): Promise<T> => {
+		let data = model;
 
-		let result = this.client.post('/Transactions', model);
-		result
-			.then(res => {
-				console.log('Transactions added successful.');
-				return this.repository.createOrUpdate(res.data);
-			})
-			.catch(err => {
-				console.log(err);
-			});
-		return model;
-	};
-	//public readonly save = (model: T): T => this.repository.createOrUpdate(model);
-
-	public readonly findAllByType = (type: T['type']): T[] => {
-		if (!this.isAppOnline) {
-			const transactions = this.repository.findAll().filter(transaction => transaction.type === type);
-			transactions.forEach(transaction => {
-				if (transaction.updatedAt) {
-					transaction.updatedAt = new Date(transaction.updatedAt);
-				}
-				if (transaction.deletedAt) {
-					transaction.deletedAt = new Date(transaction.deletedAt);
-				}
-				transaction.createdAt = new Date(transaction.createdAt);
-			});
-			return transactions;
-		} else {
-			let result = this.client.get(`/Transactions/findAllByType/${type}`);
-			result
-				.then(res => {
-					console.log(res.data);
-					const r = res.data as Transaction[];
-					return r;
-				})
-				.catch(err => {
-					console.log(err);
-					return [];
-				});
+		if (this.isSignedIn && this.isOnline) {
+			data = await this.saveRemotely(model);
 		}
-		return [];
+
+		return this.saveLocally(data);
 	};
 
-	public readonly getBalanceByType = (type: T['type']): number =>
-		this.findAllByType(type).reduce((acc, transaction) => acc + transaction.amount, 0);
+	private readonly saveLocally = (model: T): T => this.repository.createOrUpdate(model);
 
-	public readonly deleteById = (id: number): void => this.repository.deleteById(id);
+	private readonly saveRemotely = async (model: T): Promise<T> => {
+		if (model.id) {
+			const res = await this.client.put(`/Transactions/${model.id}`, model);
+			return res.data as T;
+		}
+
+		const res = await this.client.post('/Transactions', model);
+		return res.data as T;
+	};
+
+	public readonly findAllByType = async (type: T['type']): Promise<T[]> => {
+		if (this.isSignedIn && this.isOnline) {
+			return this.findAllByTypeRemotely(type);
+		}
+
+		return this.findAllByTypeLocally(type);
+	};
+
+	private readonly findAllByTypeLocally = (type: T['type']): T[] => {
+		const transactions = this.repository
+			.findAll()
+			.filter(transaction => transaction.type.toLowerCase() === type.toLowerCase());
+		return this.formatDates(transactions);
+	};
+
+	private readonly findAllByTypeRemotely = async (type: T['type']): Promise<T[]> => {
+		const res = await this.client.get(`/Transactions/findAllByType/${type}`);
+		return this.formatDates(res.data as T[]);
+	};
+
+	public readonly deleteById = async (id: number): Promise<void> => {
+		if (this.isSignedIn && this.isOnline) {
+			return this.deleteByIdRemotely(id);
+		}
+
+		return this.deleteByIdLocally(id);
+	};
+
+	private readonly deleteByIdLocally = (id: number): void => this.repository.deleteById(id);
+
+	private readonly deleteByIdRemotely = async (id: number): Promise<void> => {
+		await this.client.delete(`/Transactions/${id}`);
+	};
+
+	public readonly syncTransactions = async (): Promise<void[]> => {
+		const transactions = this.repository.findAll();
+
+		return Promise.all(
+			transactions.map(transaction => {
+				delete transaction.id;
+				this.client.post('/Transactions', transaction);
+			})
+		);
+	};
+
+	private readonly formatDates = (transactions: T[]): T[] => {
+		transactions.forEach(transaction => {
+			if (transaction.updatedAt) {
+				transaction.updatedAt = new Date(transaction.updatedAt);
+			}
+
+			if (transaction.deletedAt) {
+				transaction.deletedAt = new Date(transaction.deletedAt);
+			}
+
+			transaction.createdAt = new Date(transaction.createdAt);
+		});
+
+		return transactions;
+	};
 }
