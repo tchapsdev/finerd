@@ -162,6 +162,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 					display: 'flex',
 					flexDirection: 'column',
 					height: '100vh',
+					overflowY: 'scroll',
 				}}
 			>
 				<Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off">
@@ -231,7 +232,7 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 						position="fixed"
 						color="inherit"
 						elevation={0}
-						sx={{ bottom: 0, boxShadow: 'none', left: 0, m: 'auto', maxWidth: '494px', p: 0, top: 'auto' }}
+						sx={{ bottom: 0, boxShadow: 'none', left: 0, m: 'auto', maxWidth: 'md', p: 0, top: 'auto' }}
 					>
 						<Toolbar sx={{ justifyContent: 'center', mb: 1 }}>
 							<Actions size="large" fullWidth>
@@ -251,11 +252,10 @@ export const TransactionForm = ({ isLoading }: { isLoading: boolean }) => {
 			<Dialog
 				open={openDeleteConfirmationDialog}
 				onClose={handleCloseDeleteConfirmationDialog}
-				aria-labelledby="alert-dialog-title"
-				aria-describedby="alert-dialog-description"
+				aria-describedby="transaction-form-dialog-description"
 			>
 				<DialogContent>
-					<DialogContentText id="alert-dialog-description" color="black">
+					<DialogContentText id="transaction-form-dialog-description">
 						Do you really want to delete this transaction?
 					</DialogContentText>
 				</DialogContent>
