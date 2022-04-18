@@ -34,4 +34,6 @@ export class TokenManager<T extends AuthToken = AuthToken> {
 	public readonly setToken = (token: T): T => this.repository.createOrUpdate(token);
 
 	public readonly clearToken = (): void => this.repository.delete();
+
+	public readonly hasToken = (): boolean => this.getAccessToken() !== '';
 }

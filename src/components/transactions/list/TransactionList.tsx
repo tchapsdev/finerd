@@ -16,7 +16,7 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
 	if (!transactions.length) {
 		return (
 			<Grid container alignItems="center" justifyContent="space-between" sx={{ pb: 13, px: 1, rowGap: 2 }}>
-				<Grid item xs={12} md={6}>
+				<Grid item xs={12} sm={12} md={12}>
 					<EmptyCard variant="outlined" elevation={0}>
 						<Typography component="div" variant="subtitle1" sx={{ p: 0, pt: 4 }}>
 							no transactions added yet
@@ -35,9 +35,17 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
 	};
 
 	return (
-		<Grid container spacing={2} alignItems="center" justifyContent="space-between" sx={{ px: 1 }}>
+		<Grid container spacing={2} alignItems="center" justifyContent="flex-start" sx={{ px: 1 }}>
 			{transactions.map(transaction => (
-				<Grid item xs={12} sm={6} md={6} key={`${transaction.type}-transaction-${transaction.id}`}>
+				<Grid
+					item
+					xs={12}
+					sm={6}
+					md={6}
+					lg={4}
+					xl={3}
+					key={`${transaction.type}-transaction-${transaction.id}`}
+				>
 					<CardActionArea
 						onClick={() => {
 							openTransactionModal(transaction);
@@ -63,7 +71,7 @@ export const TransactionList = ({ transactions }: { transactions: Transaction[] 
 								</CardContent>
 							</Box>
 							<Box sx={{ flexGrow: 1 }} />
-							<Box sx={{ display: 'flex', flexDirection: 'column', width: '30%' }}>
+							<Box sx={{ display: 'flex', flexDirection: 'column', width: '50%' }}>
 								<CardContent sx={{ textAlign: 'right' }}>
 									<Typography component="div" sx={{ fontWeight: 'bold' }}>
 										{new Intl.NumberFormat('en-CA', {
