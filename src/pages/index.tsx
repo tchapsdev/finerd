@@ -1,4 +1,4 @@
-import * as signalR from '@microsoft/signalr';
+// import * as signalR from '@microsoft/signalr';
 import { Box, Container, Grid } from '@mui/material';
 import React, { useReducer } from 'react';
 
@@ -48,16 +48,95 @@ export const Main = () => {
 
 export default Main;
 
-// Push notification
-const connection = new signalR.HubConnectionBuilder()
-	.withUrl('https://finerd-api.tchapssolution.com/finerdHub', {
-		accessTokenFactory: () => window.access_token,
-		withCredentials: false,
-	})
-	.build();
+setTimeout(() => {
+	let pushServiceWorkerRegistration;
 
-connection.on('ReceiveMessage', (user: string, message: string) => {
-	console.log(`${user}:  ${message}`);
-});
+	function registerPushServiceWorker() {
+		navigator.serviceWorker
+			.register('/sw.js', { scope: './' })
+			.then(function (serviceWorkerRegistration) {
+				pushServiceWorkerRegistration = serviceWorkerRegistration;
+				subscribe();
 
-connection.start().catch(err => console.log(err));
+				console.log('Push Service Worker has been registered successfully');
+			})
+			.catch(function (error) {
+				console.log('Push Service Worker registration has failed: ' + error);
+			});
+	}
+
+	registerPushServiceWorker();
+
+	function subscribe() {
+		pushServiceWorkerRegistration.pushManager
+			.subscribe({
+				applicationServerKey:
+					'BMNs4Y5ccZ4fqqXyWRDF2kPJ25IXmxoFsHvdB5oZXj7kxBzil58gV4V1lT-HB2lp4L8Ugpgl4Dk6NKppzJeR82I',
+				userVisibleOnly: true,
+			})
+			.then(function (pushSubscription) {
+				fetch('https://finerd-api.tchapssolution.com/api/PushNotifications/subscriptions', {
+					method: 'POST',
+					body: JSON.stringify(pushSubscription),
+					headers: { 'Content-Type': 'application/json' },
+				})
+					.then(function (response) {
+						if (response.ok) {
+							console.log('Successfully subscribed for Push Notifications');
+						} else {
+							console.log('Failed to store the Push Notifications subscription on server');
+						}
+					})
+					.catch(function (error) {
+						console.log('Failed to store the Push Notifications subscription on server: ' + error);
+					});
+			})
+			.catch(function (error) {
+				if (Notification.permission === 'denied') {
+					console.log('denied');
+				} else {
+					console.log('Failed to subscribe for Push Notifications: ' + error);
+				}
+			});
+	}
+
+	self.addEventListener('push', function (event) {
+		event.waitUntil(
+			self.registration.showNotification('Demo.AspNetCore.PushNotifications', {
+				body: event.data.text(),
+				icon: '/images/push-notification-icon.png',
+			})
+		);
+	});
+
+	function unsubscribeFromPushNotifications() {
+		pushServiceWorkerRegistration.pushManager.getSubscription().then(function (pushSubscription) {
+			if (pushSubscription) {
+				pushSubscription
+					.unsubscribe()
+					.then(function () {
+						fetch(
+							'https://finerd-api.tchapssolution.com/api/PushNotifications/subscriptions?endpoint=' +
+								encodeURIComponent(pushSubscription.endpoint),
+							{ method: 'DELETE' }
+						)
+							.then(function (response) {
+								if (response.ok) {
+									console.log('Successfully unsubscribed from Push Notifications');
+								} else {
+									console.log('Failed to discard the Push Notifications subscription from server');
+								}
+							})
+							.catch(function (error) {
+								console.log(
+									'Failed to discard the Push Notifications subscription from server: ' + error
+								);
+							});
+					})
+					.catch(function (error) {
+						console.log('Failed to unsubscribe from Push Notifications: ' + error);
+					});
+			}
+		});
+	}
+}, 3000);
